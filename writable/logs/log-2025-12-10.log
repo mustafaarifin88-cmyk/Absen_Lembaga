@@ -1,0 +1,73 @@
+DEBUG - 2025-12-10 09:35:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-10 09:35:54 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'absensi_db', 3306, '', 0)
+#1 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\BaseModel.php(715): CodeIgniter\Model->doFirst()
+#6 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\app\Controllers\Auth.php(22): CodeIgniter\BaseModel->first()
+#7 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Auth->index()
+#8 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#9 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#4 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\BaseModel.php(715): CodeIgniter\Model->doFirst()
+#5 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\app\Controllers\Auth.php(22): CodeIgniter\BaseModel->first()
+#6 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Auth->index()
+#7 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#8 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 E:\Website\3. PROJECT JALAN\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\htdocs\absensi\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-12-10 09:35:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+[Method: GET, Route: /]
+in FCPATH\vendor\codeigniter4\framework\system\Database\BaseConnection.php on line 465.
+ 1 FCPATH\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 FCPATH\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `sekolah`
+ LIMIT 1', [], false)
+ 3 FCPATH\vendor\codeigniter4\framework\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 4 FCPATH\vendor\codeigniter4\framework\system\BaseModel.php(715): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Controllers\Auth.php(22): CodeIgniter\BaseModel->first()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Auth->index()
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+ 8 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-10 09:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:36:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:36:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:37:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:37:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:37:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:38:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:38:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:41:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:42:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:42:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:42:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:42:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:48:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:52:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 09:52:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:02:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:02:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:02:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:03:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:04:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:05:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-10 10:05:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

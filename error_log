@@ -1,0 +1,24 @@
+[16-Feb-2026 15:40:06 UTC] PHP Fatal error:  Uncaught Error: Class "Locale" not found in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php:142
+Stack trace:
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php(60): format_number()
+#1 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(154): number_to_size()
+#2 /home/digita28/absensiippm.digitalolshop.com/app/Views/errors/html/error_exception.php(408): CodeIgniter\Debug\BaseExceptionHandler::describeMemory()
+#3 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(266): include('/home/digita28/...')
+#4 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(269): CodeIgniter\Debug\BaseExceptionHandler->CodeIgniter\Debug\{closure}()
+#5 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/ExceptionHandler.php(116): CodeIgniter\Debug\BaseExceptionHandler->render()
+#6 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/Exceptions.php(162): CodeIgniter\Debug\ExceptionHandler->handle()
+#7 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler()
+#8 {main}
+  thrown in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php on line 142
+[16-Feb-2026 15:40:07 UTC] PHP Fatal error:  Uncaught Error: Class "Locale" not found in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php:142
+Stack trace:
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php(60): format_number()
+#1 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(154): number_to_size()
+#2 /home/digita28/absensiippm.digitalolshop.com/app/Views/errors/html/error_exception.php(408): CodeIgniter\Debug\BaseExceptionHandler::describeMemory()
+#3 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(266): include('/home/digita28/...')
+#4 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(269): CodeIgniter\Debug\BaseExceptionHandler->CodeIgniter\Debug\{closure}()
+#5 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/ExceptionHandler.php(116): CodeIgniter\Debug\BaseExceptionHandler->render()
+#6 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/Exceptions.php(162): CodeIgniter\Debug\ExceptionHandler->handle()
+#7 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler()
+#8 {main}
+  thrown in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php on line 142

@@ -1,0 +1,365 @@
+CRITICAL - 2026-02-16 20:23:13 --> ErrorException: imagecreatefrompng(C:\Absensi Barcode GPS\xampp\htdocs\assets/cards/default.png): Failed to open stream: No such file or directory
+[Method: POST, Route: admin/cetak_kartu/proses_pengurus]
+in APPPATH\Controllers\Admin\CetakKartu.php on line 96.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'imagecreatefrompng(C:\\Absensi Barcode GPS\\xampp\\htdocs\\assets/cards/default.png): Failed to open stream: No such file or directory', 'C:\\Absensi Barcode GPS\\xampp\\htdocs\\app\\Controllers\\Admin\\CetakKartu.php', 96)
+ 2 APPPATH\Controllers\Admin\CetakKartu.php(96): imagecreatefrompng('C:\\Absensi Barcode GPS\\xampp\\htdocs\\assets/cards/default.png')
+ 3 APPPATH\Controllers\Admin\CetakKartu.php(69): App\Controllers\Admin\CetakKartu->createCardImage([...], 'pengurus', [...], '3')
+ 4 APPPATH\Controllers\Admin\CetakKartu.php(41): App\Controllers\Admin\CetakKartu->generateZip([...], 'pengurus', '', '3')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\CetakKartu->prosesPengurus()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\CetakKartu))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 20:23:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:23:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:23:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:24:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:25:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:25:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:25:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:27:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:31:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:31:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:32:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:33:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:33:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:33:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:33:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:33:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:34:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:34:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:34:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:35:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:35:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:35:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:36:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:38:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:38:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:38:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:38:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:38:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:39:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:40:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:40:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:40:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:43:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:45:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 20:46:36 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan/cetak_pengurus_rekap.php"
+[Method: POST, Route: admin/laporan/cetak-pengurus-rekap]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan/cetak_pengurus_rekap.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan/cetak_pengurus_rekap', [], true)
+ 3 APPPATH\Controllers\Admin\Laporan.php(157): view('admin/laporan/cetak_pengurus_rekap', [...])
+ 4 APPPATH\Controllers\Admin\Laporan.php(76): App\Controllers\Admin\Laporan->processRekap('pengurus', 'admin/laporan/cetak_pengurus_rekap')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\Laporan->cetakPengurusRekap()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Laporan))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 20:46:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:46:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:47:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 20:48:00 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan/cetak_pengurus_rekap.php"
+[Method: POST, Route: admin/laporan/cetak-pengurus-rekap]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan/cetak_pengurus_rekap.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan/cetak_pengurus_rekap', [], true)
+ 3 APPPATH\Controllers\Admin\Laporan.php(157): view('admin/laporan/cetak_pengurus_rekap', [...])
+ 4 APPPATH\Controllers\Admin\Laporan.php(76): App\Controllers\Admin\Laporan->processRekap('pengurus', 'admin/laporan/cetak_pengurus_rekap')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\Laporan->cetakPengurusRekap()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Laporan))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 20:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:48:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 20:48:48 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan/cetak_anggota_detail.php"
+[Method: POST, Route: admin/laporan/cetak-anggota-detail]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan/cetak_anggota_detail.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan/cetak_anggota_detail', [], true)
+ 3 APPPATH\Controllers\Admin\Laporan.php(71): view('admin/laporan/cetak_anggota_detail', [...])
+ 4 APPPATH\Controllers\Admin\Laporan.php(49): App\Controllers\Admin\Laporan->processDetail('anggota', 'admin/laporan/cetak_anggota_detail')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\Laporan->cetakAnggotaDetail()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Laporan))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 20:48:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:49:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:49:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:49:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:49:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:49:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:51:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:51:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:56:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:56:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:56:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:56:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:56:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:57:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:57:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:57:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:57:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:57:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:58:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:58:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 20:58:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:16:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 21:17:29 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan_agenda/koreksi.php"
+[Method: GET, Route: admin/koreksi-agenda]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan_agenda/koreksi.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan_agenda/koreksi', [], true)
+ 3 APPPATH\Controllers\Admin\LaporanAgenda.php(103): view('admin/laporan_agenda/koreksi', [...])
+ 4 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\LaporanAgenda->koreksi()
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\LaporanAgenda))
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 21:17:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:17:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:18:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:18:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 21:18:04 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan/cetak_pengurus_rekap.php"
+[Method: POST, Route: admin/laporan/cetak-pengurus-rekap]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan/cetak_pengurus_rekap.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan/cetak_pengurus_rekap', [], true)
+ 3 APPPATH\Controllers\Admin\Laporan.php(161): view('admin/laporan/cetak_pengurus_rekap', [...])
+ 4 APPPATH\Controllers\Admin\Laporan.php(74): App\Controllers\Admin\Laporan->processRekap('pengurus', 'admin/laporan/cetak_pengurus_rekap')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\Laporan->cetakPengurusRekap()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Laporan))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 21:21:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:21:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:21:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:21:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 21:21:43 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/laporan/cetak_anggota_detail.php"
+[Method: POST, Route: admin/laporan/cetak-anggota-detail]
+in FCPATH\vendor\codeigniter4\framework\system\Exceptions\FrameworkException.php on line 39.
+ 1 FCPATH\vendor\codeigniter4\framework\system\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/laporan/cetak_anggota_detail.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan/cetak_anggota_detail', [], true)
+ 3 APPPATH\Controllers\Admin\Laporan.php(69): view('admin/laporan/cetak_anggota_detail', [...])
+ 4 APPPATH\Controllers\Admin\Laporan.php(47): App\Controllers\Admin\Laporan->processDetail('anggota', 'admin/laporan/cetak_anggota_detail')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\Laporan->cetakAnggotaDetail()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Laporan))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 21:25:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:25:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:25:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:25:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:29:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:29:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:29:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:29:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:31:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:37:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:37:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:38:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:39:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 21:39:01 --> ErrorException: imagecreatefrompng(C:\Absensi Barcode GPS\xampp\htdocs\assets/cards/default.png): Failed to open stream: No such file or directory
+[Method: POST, Route: admin/cetak_kartu/proses_pengurus]
+in APPPATH\Controllers\Admin\CetakKartu.php on line 96.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'imagecreatefrompng(C:\\Absensi Barcode GPS\\xampp\\htdocs\\assets/cards/default.png): Failed to open stream: No such file or directory', 'C:\\Absensi Barcode GPS\\xampp\\htdocs\\app\\Controllers\\Admin\\CetakKartu.php', 96)
+ 2 APPPATH\Controllers\Admin\CetakKartu.php(96): imagecreatefrompng('C:\\Absensi Barcode GPS\\xampp\\htdocs\\assets/cards/default.png')
+ 3 APPPATH\Controllers\Admin\CetakKartu.php(69): App\Controllers\Admin\CetakKartu->createCardImage([...], 'pengurus', [...], '1')
+ 4 APPPATH\Controllers\Admin\CetakKartu.php(41): App\Controllers\Admin\CetakKartu->generateZip([...], 'pengurus', '', '1')
+ 5 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\CetakKartu->prosesPengurus()
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\CetakKartu))
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-02-16 21:55:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 21:56:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 22:11:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 22:11:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 22:11:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 22:11:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-02-16 22:11:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-02-16 15:40:06 --> Error: Class "Locale" not found
+[Method: GET, Route: /]
+in FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php on line 189.
+ 1 SYSTEMPATH/Boot.php(350): CodeIgniter\CodeIgniter->initialize()
+ 2 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::initializeCodeIgniter()
+ 3 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-02-16 15:40:06 --> ErrorException: Uncaught Error: Class "Locale" not found in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php:142
+Stack trace:
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php(60): format_number()
+#1 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(154): number_to_size()
+#2 /home/digita28/absensiippm.digitalolshop.com/app/Views/errors/html/error_exception.php(408): CodeIgniter\Debug\BaseExceptionHandler::describeMemory()
+#3 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(266): include('/home/digita28/...')
+#4 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(269): CodeIgniter\Debug\BaseExceptionHandler->CodeIgniter\Debug\{closure}()
+#5 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/ExceptionHandler.php(116): CodeIgniter\Debug\BaseExceptionHandler->render()
+#6 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/Exceptions.php(162): CodeIgniter\Debug\ExceptionHandler->handle()
+#7 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler()
+#8 {main}
+  thrown
+【Previous Exception】
+Error
+Class "Locale" not found
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Boot.php(350): CodeIgniter\CodeIgniter->initialize()
+#1 /home/digita28/absensiippm.digitalolshop.com/system/Boot.php(67): CodeIgniter\Boot::initializeCodeIgniter()
+#2 /home/digita28/absensiippm.digitalolshop.com/index.php(59): CodeIgniter\Boot::bootWeb()
+#3 {main}
+[Method: GET, Route: /]
+in SYSTEMPATH/Helpers/number_helper.php on line 142.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-16 15:40:07 --> Error: Class "Locale" not found
+[Method: GET, Route: /]
+in FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php on line 189.
+ 1 SYSTEMPATH/Boot.php(350): CodeIgniter\CodeIgniter->initialize()
+ 2 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::initializeCodeIgniter()
+ 3 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-02-16 15:40:07 --> ErrorException: Uncaught Error: Class "Locale" not found in /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php:142
+Stack trace:
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Helpers/number_helper.php(60): format_number()
+#1 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(154): number_to_size()
+#2 /home/digita28/absensiippm.digitalolshop.com/app/Views/errors/html/error_exception.php(408): CodeIgniter\Debug\BaseExceptionHandler::describeMemory()
+#3 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(266): include('/home/digita28/...')
+#4 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/BaseExceptionHandler.php(269): CodeIgniter\Debug\BaseExceptionHandler->CodeIgniter\Debug\{closure}()
+#5 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/ExceptionHandler.php(116): CodeIgniter\Debug\BaseExceptionHandler->render()
+#6 /home/digita28/absensiippm.digitalolshop.com/vendor/codeigniter4/framework/system/Debug/Exceptions.php(162): CodeIgniter\Debug\ExceptionHandler->handle()
+#7 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler()
+#8 {main}
+  thrown
+【Previous Exception】
+Error
+Class "Locale" not found
+#0 /home/digita28/absensiippm.digitalolshop.com/system/Boot.php(350): CodeIgniter\CodeIgniter->initialize()
+#1 /home/digita28/absensiippm.digitalolshop.com/system/Boot.php(67): CodeIgniter\Boot::initializeCodeIgniter()
+#2 /home/digita28/absensiippm.digitalolshop.com/index.php(59): CodeIgniter\Boot::bootWeb()
+#3 {main}
+[Method: GET, Route: /]
+in SYSTEMPATH/Helpers/number_helper.php on line 142.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-16 15:40:18 --> Error: Class "Locale" not found
+[Method: GET, Route: /]
+in FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php on line 189.
+ 1 SYSTEMPATH/Boot.php(350): CodeIgniter\CodeIgniter->initialize()
+ 2 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::initializeCodeIgniter()
+ 3 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-02-16 22:52:04 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "@vite"
+[Method: GET, Route: @vite/client]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('@vite/client')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('@vite/client')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-16 22:52:05 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "@vite"
+[Method: GET, Route: @vite/client]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('@vite/client')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('@vite/client')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-16 23:00:40 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+[Method: GET, Route: https:/fonts.googleapis.com/css2%3Ffamily=Nunito:wght@300;400;600;700;800&display=swap]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('https:/fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('https:/fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-16 23:30:34 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+[Method: GET, Route: https:/fonts.googleapis.com/css2%3Ffamily=Nunito:wght@300;400;600;700;800&display=swap]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('https:/fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('https:/fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

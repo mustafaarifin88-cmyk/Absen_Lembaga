@@ -1,0 +1,80 @@
+CRITICAL - 2026-02-23 00:45:51 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: ".env.{{DN}}"
+[Method: GET, Route: .env.%7B%7BDN%7D%7D]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('.env.{{DN}}')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('.env.{{DN}}')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 00:45:51 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: ".env.{{SD}}"
+[Method: GET, Route: .env.%7B%7BSD%7D%7D]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('.env.{{SD}}')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('.env.{{SD}}')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 00:49:49 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "wp-config.php="
+[Method: GET, Route: wp-config.php=]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('wp-config.php=')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('wp-config.php=')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 00:54:28 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "$"
+[Method: GET, Route: frontend_dev.php/$]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('frontend_dev.php/$')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('frontend_dev.php/$')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 01:00:07 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: ".env.{{DN}}"
+[Method: GET, Route: .env.%7B%7BDN%7D%7D]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('.env.{{DN}}')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('.env.{{DN}}')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 01:00:09 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: ".env.{{SD}}"
+[Method: GET, Route: .env.%7B%7BSD%7D%7D]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('.env.{{SD}}')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('.env.{{SD}}')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 01:05:16 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "wp-config.php="
+[Method: GET, Route: wp-config.php=]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('wp-config.php=')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('wp-config.php=')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-23 01:09:48 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "$"
+[Method: GET, Route: frontend_dev.php/$]
+in FCPATH/vendor/codeigniter4/framework/system/Router/Router.php on line 741.
+ 1 FCPATH/vendor/codeigniter4/framework/system/Router/Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('frontend_dev.php/$')
+ 2 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(832): CodeIgniter\Router\Router->handle('frontend_dev.php/$')
+ 3 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 FCPATH/vendor/codeigniter4/framework/system/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
