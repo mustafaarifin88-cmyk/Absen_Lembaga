@@ -41,14 +41,6 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes) {
     $routes->get('setting-theme', 'Admin\SettingTheme::index');
     $routes->post('setting-theme/update', 'Admin\SettingTheme::update');
 
-    $routes->get('setting-print', 'Admin\SettingPrint::index');
-    $routes->post('setting-print/save', 'Admin\SettingPrint::save');
-
-    $routes->get('libur-nasional', 'Admin\LiburNasional::index');
-    $routes->get('libur-nasional/new', 'Admin\LiburNasional::new');
-    $routes->post('libur-nasional/create', 'Admin\LiburNasional::create');
-    $routes->get('libur-nasional/delete/(:num)', 'Admin\LiburNasional::delete/$1');
-
     $routes->get('pengurus', 'Admin\Pengurus::index');
     $routes->get('pengurus/new', 'Admin\Pengurus::new');
     $routes->post('pengurus/create', 'Admin\Pengurus::create');
@@ -83,6 +75,11 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes) {
     $routes->post('agenda/save-masyarakat', 'Admin\Agenda::saveMasyarakat');
     $routes->post('agenda/update-masyarakat', 'Admin\Agenda::updateMasyarakat');
     $routes->get('agenda/delete-masyarakat/(:num)', 'Admin\Agenda::deleteMasyarakat/$1');
+
+    $routes->get('jadwal-rapat', 'Admin\JadwalRapat::index');
+    $routes->post('jadwal-rapat/save', 'Admin\JadwalRapat::save');
+    $routes->post('jadwal-rapat/update', 'Admin\JadwalRapat::update');
+    $routes->get('jadwal-rapat/delete/(:num)', 'Admin\JadwalRapat::delete/$1');
 
     $routes->get('laporan', 'Admin\Laporan::index');
     $routes->get('laporan/filter', 'Admin\Laporan::filter');
