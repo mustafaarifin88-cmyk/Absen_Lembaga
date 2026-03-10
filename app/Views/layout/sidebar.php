@@ -258,6 +258,28 @@ $namaOrg = ($orgData && !empty($orgData['nama_organisasi'])) ? $orgData['nama_or
     body.theme-dark .theme-toggle {
         background: rgba(255,255,255,0.1);
     }
+
+    .btn-scan-qr {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 1rem;
+        box-shadow: 0 8px 20px rgba(17, 153, 142, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-scan-qr:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(17, 153, 142, 0.4);
+        color: white;
+    }
 </style>
 
 <div id="sidebar" class="active">
@@ -294,6 +316,12 @@ $namaOrg = ($orgData && !empty($orgData['nama_organisasi'])) ? $orgData['nama_or
                 </div>
             </div>
         </a>
+
+        <div class="px-4 mb-4 mt-2">
+            <a href="<?= base_url('scan') ?>" class="btn-scan-qr">
+                <i class="bi bi-qr-code-scan"></i> Scanner Absen
+            </a>
+        </div>
 
         <div class="sidebar-menu">
             <ul class="menu">
