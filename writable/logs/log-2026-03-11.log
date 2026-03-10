@@ -3,3 +3,18 @@ DEBUG - 2026-03-11 00:00:13 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-03-11 00:00:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-03-11 00:00:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-03-11 00:10:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-11 00:12:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-11 00:12:00 --> ErrorException: Undefined variable $kategori
+[Method: POST, Route: admin/laporan-agenda/cetak-matriks-bulanan]
+in APPPATH\Views\admin\laporan_agenda\cetak_matriks_bulan.php on line 22.
+ 1 APPPATH\Views\admin\laporan_agenda\cetak_matriks_bulan.php(22): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $kategori', 'C:\\xampp\\htdocs\\Absen_Lembaga\\app\\Views\\admin\\laporan_agenda\\cetak_matriks_bulan.php', 22)
+ 2 FCPATH\vendor\codeigniter4\framework\system\View\View.php(226): include('C:\\xampp\\htdocs\\Absen_Lembaga\\app\\Views\\admin\\laporan_agenda\\cetak_matriks_bulan.php')
+ 3 FCPATH\vendor\codeigniter4\framework\system\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/laporan_agenda/cetak_matriks_bulan', [], true)
+ 5 APPPATH\Controllers\Admin\LaporanAgenda.php(116): view('admin/laporan_agenda/cetak_matriks_bulan', [...])
+ 6 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Admin\LaporanAgenda->cetakMatriksBulanan()
+ 7 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\LaporanAgenda))
+ 8 FCPATH\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

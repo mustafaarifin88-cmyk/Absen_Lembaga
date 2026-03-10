@@ -108,6 +108,7 @@ class LaporanAgenda extends BaseController {
             'organisasi' => $this->organisasiModel->first(),
             'bulan' => $bulan,
             'tahun' => $tahun,
+            'kategori' => $kategori,
             'agendaDates' => $agendaDates,
             'agendaName' => $agendaName,
             'namaBulan' => ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
@@ -164,6 +165,7 @@ class LaporanAgenda extends BaseController {
             'rekap' => $rekapTahun,
             'organisasi' => $this->organisasiModel->first(),
             'tahun' => $tahun,
+            'kategori' => $kategori,
             'agendaCountPerMonth' => $agendaCountPerMonth,
             'agendaName' => $agendaName
         ];
