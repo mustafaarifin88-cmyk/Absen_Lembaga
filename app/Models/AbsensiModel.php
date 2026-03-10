@@ -16,25 +16,92 @@ class AbsensiModel extends Model
 
     public function getLaporan($tglAwal, $tglAkhir, $userType, $rtId = null)
     {
-        $builder = $this->db->table($this->table);
+        $db = \Config\Database::connect();
+
+        $targetPeserta = ($userType == 'pengurus') ? 'Pengurus' : 'Anggota';
+        $jadwal = $db->table('jadwal_rapat')
+            ->where('tanggal >=', $tglAwal)
+            ->where('tanggal <=', $tglAkhir)
+            ->groupStart()
+                ->where('peserta', 'Semua')
+                ->orWhere('peserta', $targetPeserta)
+            ->groupEnd()
+            ->get()->getResultArray();
+        $jadwalDates = array_column($jadwal, 'tanggal');
+
+        $users = [];
+        if ($userType == 'pengurus') {
+            $users = $db->table('pengurus')->get()->getResultArray();
+        } else {
+            $builder = $db->table('anggota')->select('anggota.*, rt.nama_rt')->join('rt', 'rt.id = anggota.rt_id', 'left');
+            if ($rtId) $builder->where('anggota.rt_id', $rtId);
+            $users = $builder->get()->getResultArray();
+        }
+
+        $builder = $db->table($this->table);
         $builder->select('absensi.*, anggota.nama_lengkap as nama_anggota, pengurus.nama_lengkap as nama_pengurus, rt.nama_rt');
         $builder->join('anggota', 'anggota.id = absensi.user_id AND absensi.user_type = "anggota"', 'left');
         $builder->join('pengurus', 'pengurus.id = absensi.user_id AND absensi.user_type = "pengurus"', 'left');
         $builder->join('rt', 'rt.id = anggota.rt_id', 'left');
-
-        if ($userType) {
-            $builder->where('absensi.user_type', $userType);
-        }
-        if ($rtId) {
-            $builder->where('anggota.rt_id', $rtId);
-        }
-        
+        $builder->where('absensi.user_type', $userType);
         $builder->where('absensi.tanggal >=', $tglAwal);
         $builder->where('absensi.tanggal <=', $tglAkhir);
-        $builder->orderBy('absensi.tanggal', 'DESC');
-        $builder->orderBy('absensi.jam_masuk', 'DESC');
+        if ($rtId && $userType == 'anggota') {
+            $builder->where('anggota.rt_id', $rtId);
+        }
+        $absensiAktual = $builder->get()->getResultArray();
 
-        return $builder->get()->getResultArray();
+        $mapAbsensi = [];
+        foreach($absensiAktual as $abs) {
+            $mapAbsensi[$abs['tanggal']][$abs['user_id']] = $abs;
+        }
+
+        $finalData = [];
+        $currentDate = strtotime($tglAwal);
+        $endDate = strtotime($tglAkhir);
+
+        while ($currentDate <= $endDate) {
+            $dateStr = date('Y-m-d', $currentDate);
+            $isRapat = in_array($dateStr, $jadwalDates);
+
+            if ($isRapat || isset($mapAbsensi[$dateStr])) {
+                foreach ($users as $user) {
+                    if (isset($mapAbsensi[$dateStr][$user['id']])) {
+                        $finalData[] = $mapAbsensi[$dateStr][$user['id']];
+                    } else if ($isRapat) {
+                        $finalData[] = [
+                            'id' => null, 
+                            'user_type' => $userType,
+                            'user_id' => $user['id'],
+                            'tanggal' => $dateStr,
+                            'jam_masuk' => '-',
+                            'jam_pulang' => '-',
+                            'status' => 'Alfa',
+                            'keterangan' => 'Belum Absen',
+                            'lokasi_lat' => '-',
+                            'lokasi_long' => '-',
+                            'nama_anggota' => $userType == 'anggota' ? $user['nama_lengkap'] : null,
+                            'nama_pengurus' => $userType == 'pengurus' ? $user['nama_lengkap'] : null,
+                            'nama_rt' => $userType == 'anggota' ? (isset($user['nama_rt']) ? $user['nama_rt'] : '-') : '-'
+                        ];
+                    }
+                }
+            }
+            $currentDate = strtotime("+1 day", $currentDate);
+        }
+
+        usort($finalData, function($a, $b) {
+            $t1 = strtotime($b['tanggal']);
+            $t2 = strtotime($a['tanggal']);
+            if ($t1 != $t2) return $t1 - $t2;
+            
+            if ($a['jam_masuk'] != '-' && $b['jam_masuk'] == '-') return -1;
+            if ($a['jam_masuk'] == '-' && $b['jam_masuk'] != '-') return 1;
+
+            return strcmp($b['jam_masuk'], $a['jam_masuk']);
+        });
+
+        return $finalData;
     }
 
     public function getKoreksiData($tglAwal, $tglAkhir, $userType, $rtId = null)
