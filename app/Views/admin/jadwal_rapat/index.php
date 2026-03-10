@@ -173,16 +173,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(empty($jadwal)): ?>
-                            <tr>
-                                <td colspan="6" class="text-center py-5 text-muted">
-                                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
-                                    <h6 class="fw-bold">Belum ada jadwal rapat</h6>
-                                    <p class="small">Klik tombol tambah jadwal untuk membuat rapat baru.</p>
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                        
                         <?php foreach($jadwal as $key => $j): ?>
                         <tr>
                             <td class="text-center fw-bold text-muted"><?= $key+1 ?></td>
@@ -328,7 +318,8 @@
     $(document).ready(function() {
         $('#tableJadwal').DataTable({
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json"
+                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json",
+                "emptyTable": '<div class="text-center py-4 text-muted"><i class="bi bi-inbox fs-1 d-block mb-2 opacity-50"></i><h6 class="fw-bold">Belum ada jadwal rapat</h6><p class="small">Klik tombol tambah jadwal untuk membuat rapat baru.</p></div>'
             },
             "dom": '<"row"<"col-md-6"l><"col-md-6"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
             "drawCallback": function() {
