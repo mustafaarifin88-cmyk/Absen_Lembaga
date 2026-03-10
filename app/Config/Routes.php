@@ -92,6 +92,8 @@ $routes->group('admin', ['filter' => 'auth:admin'], function($routes) {
 
     $routes->get('laporan-agenda', 'Admin\LaporanAgenda::index');
     $routes->post('laporan-agenda/cetak', 'Admin\LaporanAgenda::cetak');
+    $routes->post('laporan-agenda/cetak-matriks-bulanan', 'Admin\LaporanAgenda::cetakMatriksBulanan');
+    $routes->post('laporan-agenda/cetak-matriks-tahunan', 'Admin\LaporanAgenda::cetakMatriksTahunan');
 
     $routes->get('koreksi', 'Admin\Koreksi::index');
     $routes->get('koreksi/filter', 'Admin\Koreksi::filter');
