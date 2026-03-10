@@ -17,99 +17,57 @@ class AbsensiAgendaModel extends Model
     {
         $db = \Config\Database::connect();
 
-        // 1. Ambil Data Absensi yang Sudah Ada (Hadir/Sakit/Izin/Alfa Manual)
         $builder = $db->table($this->table);
         $builder->select('absensi_agenda.*, anggota.nama_lengkap as nama_anggota, pengurus.nama_lengkap as nama_pengurus');
         $builder->join('anggota', 'anggota.id = absensi_agenda.user_id AND absensi_agenda.user_type = "anggota"', 'left');
         $builder->join('pengurus', 'pengurus.id = absensi_agenda.user_id AND absensi_agenda.user_type = "pengurus"', 'left');
         $builder->where('absensi_agenda.tanggal >=', $tglAwal);
         $builder->where('absensi_agenda.tanggal <=', $tglAkhir);
-        
-        if ($kategori != 'semua') {
-            $builder->where('absensi_agenda.kategori', $kategori);
-        }
+        $builder->where('absensi_agenda.kategori', $kategori);
         if ($agendaId) {
             $builder->where('absensi_agenda.agenda_id', $agendaId);
         }
-        $existingData = $builder->get()->getResultArray();
+        $absensiAktual = $builder->get()->getResultArray();
 
-        // Map data existing untuk pencarian cepat
-        $attendanceMap = [];
-        foreach ($existingData as $row) {
-            // Key unik: Tanggal_AgendaID_UserType_UserID
-            $key = $row['tanggal'] . '_' . $row['agenda_id'] . '_' . $row['user_type'] . '_' . $row['user_id'];
-            $attendanceMap[$key] = $row;
+        $mapAbsensi = [];
+        foreach($absensiAktual as $abs) {
+            $mapAbsensi[$abs['tanggal']][$abs['agenda_id']][$abs['user_type']][$abs['user_id']] = $abs;
         }
 
-        // 2. Ambil Semua User (Pengurus & Anggota)
-        $pengurus = $db->table('pengurus')->get()->getResultArray();
-        $anggota = $db->table('anggota')->get()->getResultArray();
-        
         $allUsers = [];
-        foreach($pengurus as $p) {
-            $allUsers[] = [
-                'user_type' => 'pengurus',
-                'user_id' => $p['id'],
-                'nama_lengkap' => $p['nama_lengkap'],
-                'nama_pengurus' => $p['nama_lengkap'],
-                'nama_anggota' => null
-            ];
-        }
-        foreach($anggota as $a) {
-            $allUsers[] = [
-                'user_type' => 'anggota',
-                'user_id' => $a['id'],
-                'nama_lengkap' => $a['nama_lengkap'],
-                'nama_pengurus' => null,
-                'nama_anggota' => $a['nama_lengkap']
-            ];
-        }
+        $pengurus = $db->table('pengurus')->get()->getResultArray();
+        foreach($pengurus as $p) $allUsers[] = ['user_type'=>'pengurus', 'user_id'=>$p['id'], 'nama_pengurus'=>$p['nama_lengkap'], 'nama_anggota'=>null];
+        
+        $anggota = $db->table('anggota')->get()->getResultArray();
+        foreach($anggota as $a) $allUsers[] = ['user_type'=>'anggota', 'user_id'=>$a['id'], 'nama_pengurus'=>null, 'nama_anggota'=>$a['nama_lengkap']];
 
-        // 3. Ambil Jadwal Agenda yang Relevan
-        $agendas = [];
-        if ($kategori == 'ippm' || $kategori == 'semua') {
-            $qIppm = $db->table('agenda_ippm');
-            if($agendaId && $kategori == 'ippm') $qIppm->where('id', $agendaId);
-            $resIppm = $qIppm->get()->getResultArray();
-            foreach($resIppm as $r) { $r['kategori'] = 'ippm'; $agendas[] = $r; }
-        }
-        if ($kategori == 'masyarakat' || $kategori == 'semua') {
-            $qMas = $db->table('agenda_masyarakat');
-            if($agendaId && $kategori == 'masyarakat') $qMas->where('id', $agendaId);
-            $resMas = $qMas->get()->getResultArray();
-            foreach($resMas as $r) { $r['kategori'] = 'masyarakat'; $agendas[] = $r; }
-        }
+        $tabelAgenda = ($kategori == 'ippm') ? 'agenda_ippm' : 'agenda_masyarakat';
+        $builderAgenda = $db->table($tabelAgenda);
+        if ($agendaId) $builderAgenda->where('id', $agendaId);
+        $listAgenda = $builderAgenda->get()->getResultArray();
 
         $mapHari = [
             'Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
             'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'
         ];
 
-        // 4. Generate Laporan (Cross Join: Tanggal x Agenda x User)
         $finalData = [];
         $currentDate = strtotime($tglAwal);
         $endDate = strtotime($tglAkhir);
 
         while ($currentDate <= $endDate) {
             $dateStr = date('Y-m-d', $currentDate);
-            $dayNameIng = date('l', $currentDate);
-            $dayNameInd = $mapHari[$dayNameIng];
+            $dayNameInggris = date('l', $currentDate);
+            $dayNameIndo = $mapHari[$dayNameInggris];
 
-            foreach ($agendas as $agenda) {
-                // Cek apakah agenda ini jadwalnya hari ini
-                if ($agenda['hari'] == $dayNameInd) {
-                    
+            foreach ($listAgenda as $agenda) {
+                if ($agenda['hari'] == $dayNameIndo) {
                     foreach ($allUsers as $user) {
-                        $key = $dateStr . '_' . $agenda['id'] . '_' . $user['user_type'] . '_' . $user['user_id'];
-                        
-                        if (isset($attendanceMap[$key])) {
-                            // Jika ada data absensi, gunakan itu
-                            $finalData[] = $attendanceMap[$key];
+                        if (isset($mapAbsensi[$dateStr][$agenda['id']][$user['user_type']][$user['user_id']])) {
+                            $finalData[] = $mapAbsensi[$dateStr][$agenda['id']][$user['user_type']][$user['user_id']];
                         } else {
-                            // Jika tidak ada, buat data Alfa Virtual
                             $finalData[] = [
-                                'id' => null, // ID null menandakan data virtual
-                                'tanggal' => $dateStr,
+                                'id' => null,
                                 'nama_agenda' => $agenda['nama_agenda'],
                                 'user_type' => $user['user_type'],
                                 'user_id' => $user['user_id'],
@@ -117,7 +75,7 @@ class AbsensiAgendaModel extends Model
                                 'nama_anggota' => $user['nama_anggota'],
                                 'jam_absen' => '-',
                                 'status' => 'Alfa',
-                                'kategori' => $agenda['kategori'],
+                                'kategori' => $kategori,
                                 'agenda_id' => $agenda['id'],
                                 'lokasi_lat' => '-',
                                 'lokasi_long' => '-'
@@ -129,9 +87,8 @@ class AbsensiAgendaModel extends Model
             $currentDate = strtotime("+1 day", $currentDate);
         }
 
-        // Urutkan data: Tanggal DESC, Nama Agenda ASC, Nama User ASC
         usort($finalData, function($a, $b) {
-            $t1 = strtotime($b['tanggal']); // DESC Date
+            $t1 = strtotime($b['tanggal']); 
             $t2 = strtotime($a['tanggal']);
             if ($t1 != $t2) return $t1 - $t2;
             
@@ -144,5 +101,51 @@ class AbsensiAgendaModel extends Model
         });
 
         return $finalData;
+    }
+
+    public function getRekapBulanan($bulan, $tahun, $userType, $kategori, $agendaId)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->select('absensi_agenda.user_id, DAY(absensi_agenda.tanggal) as hari, absensi_agenda.status');
+        $builder->where('absensi_agenda.user_type', $userType);
+        $builder->where('absensi_agenda.kategori', $kategori);
+        $builder->where('absensi_agenda.agenda_id', $agendaId);
+        $builder->where('MONTH(absensi_agenda.tanggal)', $bulan);
+        $builder->where('YEAR(absensi_agenda.tanggal)', $tahun);
+        $query = $builder->get()->getResultArray();
+
+        $rekap = [];
+        foreach ($query as $row) {
+            $rekap[$row['user_id']][$row['hari']] = $row['status'];
+        }
+        return $rekap;
+    }
+
+    public function getRekapTahunan($tahun, $userType, $kategori, $agendaId)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->select('absensi_agenda.user_id, MONTH(absensi_agenda.tanggal) as bulan, absensi_agenda.status');
+        $builder->where('absensi_agenda.user_type', $userType);
+        $builder->where('absensi_agenda.kategori', $kategori);
+        $builder->where('absensi_agenda.agenda_id', $agendaId);
+        $builder->where('YEAR(absensi_agenda.tanggal)', $tahun);
+        $query = $builder->get()->getResultArray();
+
+        $rekap = [];
+        foreach ($query as $row) {
+            $uid = $row['user_id'];
+            $bln = $row['bulan'];
+            $sts = $row['status'];
+
+            if (!isset($rekap[$uid][$bln])) {
+                $rekap[$uid][$bln] = ['H' => 0, 'S' => 0, 'I' => 0, 'A' => 0];
+            }
+
+            if ($sts == 'Hadir') $rekap[$uid][$bln]['H']++;
+            elseif ($sts == 'Sakit') $rekap[$uid][$bln]['S']++;
+            elseif ($sts == 'Izin') $rekap[$uid][$bln]['I']++;
+            elseif ($sts == 'Alfa') $rekap[$uid][$bln]['A']++;
+        }
+        return $rekap;
     }
 }

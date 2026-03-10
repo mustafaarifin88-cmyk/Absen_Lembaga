@@ -1,30 +1,99 @@
+<?php
+use App\Models\OrganisasiModel;
+$orgModel = new OrganisasiModel();
+$org = $orgModel->first();
+$namaOrg = $org ? $org['nama_organisasi'] : 'Sistem Absensi';
+$logoOrg = $org && $org['logo'] ? base_url('uploads/logo/'.$org['logo']) : base_url('assets/images/logo.png');
+?>
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section('content') ?>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <audio id="beep-sound" src="<?= base_url('assets/beep.mp3') ?>" preload="auto"></audio>
 
 <style>
+    .page-wrapper-scan {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .header-scan {
+        background: linear-gradient(135deg, #435ebe 0%, #25396f 100%);
+        border-radius: 24px;
+        padding: 30px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(67, 94, 190, 0.2);
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+    .header-scan::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+    }
+    .logo-scan {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 16px;
+        border: 3px solid rgba(255,255,255,0.3);
+        margin-bottom: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .card-scanner {
+        border: none;
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        background: #fff;
+        padding: 30px;
+    }
+    .form-select-modern {
+        border: 2px solid #eef2f7;
+        border-radius: 14px;
+        padding: 12px 15px;
+        font-weight: 600;
+        color: #435ebe;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    .form-select-modern:focus {
+        border-color: #435ebe;
+        box-shadow: 0 0 0 4px rgba(67, 94, 190, 0.1);
+    }
     .scan-container {
         position: relative;
         overflow: hidden;
         border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         background: #000;
+        margin-top: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-
     #reader {
         width: 100%;
         border-radius: 20px;
     }
-
     #reader video {
         object-fit: cover;
         border-radius: 20px;
     }
-
+    #reader__dashboard_section_csr span {
+        color: white !important;
+    }
+    #reader__dashboard_section_swaplink {
+        color: #435ebe !important;
+        text-decoration: none;
+        font-weight: bold;
+        background: white;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
     .scan-overlay {
         position: absolute;
         top: 0;
@@ -44,243 +113,153 @@
         background-repeat: no-repeat;
         background-size: 40px 40px;
         z-index: 10;
-        margin: 20px;
-        width: calc(100% - 40px);
-        height: calc(100% - 40px);
+        opacity: 0.8;
     }
-
     .scan-line {
         position: absolute;
         width: 100%;
         height: 3px;
-        background: #00ff00;
-        box-shadow: 0 0 10px #00ff00;
+        background: #38ef7d;
+        box-shadow: 0 0 15px #38ef7d;
         animation: scan 2s infinite linear;
-        top: 0;
-        z-index: 5;
+        z-index: 11;
     }
-
     @keyframes scan {
-        0% { top: 0; opacity: 0; }
+        0% { top: 0%; opacity: 0; }
         10% { opacity: 1; }
         90% { opacity: 1; }
         100% { top: 100%; opacity: 0; }
     }
-
-    .card-mode {
-        border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        border: none;
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-
-    .nav-pills-custom .nav-link {
-        color: #607080;
+    .status-text {
+        font-size: 0.9rem;
         font-weight: 700;
-        padding: 15px;
-        border-radius: 0;
-        background: #f8f9fa;
-        transition: all 0.3s;
-        border-bottom: 3px solid transparent;
-    }
-
-    .nav-pills-custom .nav-link.active {
-        background: #fff;
-        color: #435ebe;
-        border-bottom: 3px solid #435ebe;
-    }
-
-    .nav-pills-custom .nav-item {
-        flex: 1;
-        text-align: center;
+        color: #607080;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        display: block;
     }
 </style>
 
-<div class="page-content">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
+<div class="page-wrapper-scan">
+    <div class="header-scan">
+        <img src="<?= $logoOrg ?>" alt="Logo" class="logo-scan">
+        <h3 class="fw-bold mb-1 text-white"><?= esc($namaOrg) ?></h3>
+        <p class="mb-0 opacity-75">Portal Pemindaian QR Code Kehadiran Terpadu</p>
+    </div>
+
+    <div class="card-scanner">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <span class="status-text"><i class="bi bi-funnel-fill me-1"></i> Mode Absensi</span>
+                <select id="tipe_absen" class="form-select form-select-modern" onchange="toggleAgendaOptions()">
+                    <option value="rapat">Rapat Organisasi (Default)</option>
+                    <option value="ippm">Agenda IPPM (Keagamaan)</option>
+                    <option value="masyarakat">Agenda Kemasyarakatan</option>
+                </select>
+            </div>
             
-            <div class="text-center mb-4">
-                <h3 class="fw-bold text-primary">Scan QR Code</h3>
-                <p class="text-muted">Arahkan kamera ke QR Code Kartu Anggota/Pengurus</p>
+            <div class="col-md-12 mb-4 d-none" id="container_ippm">
+                <span class="status-text"><i class="bi bi-journal-bookmark-fill me-1"></i> Pilih Agenda IPPM Hari Ini</span>
+                <select id="agenda_ippm" class="form-select form-select-modern">
+                    <option value="">-- Pilih Agenda --</option>
+                    <?php if(isset($list_ippm)): foreach($list_ippm as $i): ?>
+                        <option value="<?= $i['id'] ?>" data-name="<?= $i['nama_agenda'] ?>"><?= $i['nama_agenda'] ?> (<?= substr($i['jam_mulai'],0,5) ?>)</option>
+                    <?php endforeach; endif; ?>
+                </select>
             </div>
 
-            <div class="card card-mode">
-                <ul class="nav nav-pills nav-pills-custom" id="mode-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="harian-tab" data-bs-toggle="pill" href="#mode-harian" role="tab" onclick="setMode('harian')">
-                            <i class="bi bi-clock-history me-2"></i> Absen Harian
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="agenda-tab" data-bs-toggle="pill" href="#mode-agenda" role="tab" onclick="setMode('agenda')">
-                            <i class="bi bi-calendar-check me-2"></i> Absen Agenda
-                        </a>
-                    </li>
-                </ul>
-                
-                <div class="tab-content p-4" id="mode-tabContent">
-                    <div class="tab-pane fade show active" id="mode-harian" role="tabpanel">
-                        <div class="alert alert-light-primary border-0 small text-center mb-0">
-                            <i class="bi bi-info-circle me-1"></i> Scan untuk Absen Masuk & Pulang Harian
-                        </div>
-                    </div>
-                    
-                    <div class="tab-pane fade" id="mode-agenda" role="tabpanel">
-                        <div class="mb-3">
-                            <label class="fw-bold small mb-1">Kategori Agenda</label>
-                            <select id="kategori_agenda" class="form-select" onchange="toggleAgendaList()">
-                                <option value="ippm">IPPM (Keagamaan)</option>
-                                <option value="masyarakat">Kemasyarakatan</option>
-                            </select>
-                        </div>
-                        
-                        <div id="wrapper_ippm">
-                            <label class="fw-bold small mb-1">Pilih Agenda IPPM</label>
-                            <select id="agenda_ippm" class="form-select">
-                                <?php if(empty($list_ippm)): ?>
-                                    <option value="">Tidak ada agenda hari ini</option>
-                                <?php else: ?>
-                                    <?php foreach($list_ippm as $i): ?>
-                                        <option value="<?= $i['id'] ?>">
-                                            <?= $i['nama_agenda'] ?> (<?= substr($i['jam_mulai'],0,5) ?>)
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
-
-                        <div id="wrapper_masyarakat" class="d-none">
-                            <label class="fw-bold small mb-1">Pilih Agenda Masyarakat</label>
-                            <select id="agenda_masyarakat" class="form-select">
-                                <?php if(empty($list_masyarakat)): ?>
-                                    <option value="">Tidak ada agenda hari ini</option>
-                                <?php else: ?>
-                                    <?php foreach($list_masyarakat as $m): ?>
-                                        <option value="<?= $m['id'] ?>">
-                                            <?= $m['nama_agenda'] ?> (<?= substr($m['jam_mulai'],0,5) ?>)
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12 mb-4 d-none" id="container_masyarakat">
+                <span class="status-text"><i class="bi bi-people-fill me-1"></i> Pilih Agenda Masyarakat Hari Ini</span>
+                <select id="agenda_masyarakat" class="form-select form-select-modern">
+                    <option value="">-- Pilih Agenda --</option>
+                    <?php if(isset($list_masyarakat)): foreach($list_masyarakat as $m): ?>
+                        <option value="<?= $m['id'] ?>" data-name="<?= $m['nama_agenda'] ?>"><?= $m['nama_agenda'] ?> (<?= substr($m['jam_mulai'],0,5) ?>)</option>
+                    <?php endforeach; endif; ?>
+                </select>
             </div>
+        </div>
 
-            <div class="scan-container">
-                <div id="reader"></div>
-                <div class="scan-overlay"></div>
-                <div class="scan-line"></div>
-            </div>
-
-            <div class="text-center mt-4">
-                <a href="javascript:history.back()" class="btn btn-light rounded-pill px-4 fw-bold">
-                    <i class="bi bi-arrow-left me-2"></i> Kembali
-                </a>
-            </div>
-
+        <div class="scan-container">
+            <div id="reader"></div>
+            <div class="scan-overlay"></div>
+            <div class="scan-line"></div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <p class="text-muted small fw-bold"><i class="bi bi-upc-scan me-1"></i> Arahkan QR Code anggota/pengurus tepat ke area kamera.</p>
         </div>
     </div>
 </div>
 
 <script>
     let isProcessing = false;
-    let currentMode = 'harian'; 
-    let currentLat = null;
-    let currentLong = null;
-
-    function setMode(mode) {
-        currentMode = mode;
-    }
-
-    function toggleAgendaList() {
-        const kat = document.getElementById('kategori_agenda').value;
-        if(kat === 'ippm') {
-            document.getElementById('wrapper_ippm').classList.remove('d-none');
-            document.getElementById('wrapper_masyarakat').classList.add('d-none');
-        } else {
-            document.getElementById('wrapper_ippm').classList.add('d-none');
-            document.getElementById('wrapper_masyarakat').classList.remove('d-none');
-        }
-    }
+    let userLat = null;
+    let userLng = null;
 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                currentLat = position.coords.latitude;
-                currentLong = position.coords.longitude;
-            },
-            (error) => {
-                console.warn("Gagal mengambil lokasi: " + error.message);
-            }
-        );
+        navigator.geolocation.getCurrentPosition(function(position) {
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
+        });
     }
 
-    function playBeep() {
-        var audio = document.getElementById("beep-sound");
-        if (audio) {
-            audio.play().catch(e => console.log("Audio play error:", e));
-        }
+    function toggleAgendaOptions() {
+        const tipe = document.getElementById('tipe_absen').value;
+        const cIppm = document.getElementById('container_ippm');
+        const cMas = document.getElementById('container_masyarakat');
+        
+        cIppm.classList.add('d-none');
+        cMas.classList.add('d-none');
+        
+        if(tipe === 'ippm') cIppm.classList.remove('d-none');
+        if(tipe === 'masyarakat') cMas.classList.remove('d-none');
     }
 
     function onScanSuccess(decodedText, decodedResult) {
         if (isProcessing) return;
         isProcessing = true;
-        playBeep();
-
-        let formData = new FormData();
-        formData.append('qr_code', decodedText);
         
-        if (currentLat && currentLong) {
-            formData.append('latitude', currentLat);
-            formData.append('longitude', currentLong);
-        } else {
-            formData.append('latitude', '-');
-            formData.append('longitude', '-');
-        }
+        document.getElementById('beep-sound').play();
+        const tipe = document.getElementById('tipe_absen').value;
+        let url = '<?= base_url('absensi/process-scan') ?>';
+        let bodyData = new URLSearchParams({
+            qr_code: decodedText,
+            latitude: userLat,
+            longitude: userLng
+        });
 
-        let targetUrl = "<?= base_url('absensi/process-scan') ?>";
-
-        if (currentMode === 'agenda') {
-            targetUrl = "<?= base_url('absensi/process-scan-agenda') ?>";
-            
-            const kategori = document.getElementById('kategori_agenda').value;
-            let agendaId = '';
-            
-            if(kategori === 'ippm') {
-                agendaId = document.getElementById('agenda_ippm').value;
-            } else {
-                agendaId = document.getElementById('agenda_masyarakat').value;
-            }
-
-            if(!agendaId) {
-                Swal.fire('Peringatan', 'Silakan pilih agenda terlebih dahulu, atau tidak ada agenda hari ini.', 'warning')
-                    .then(() => isProcessing = false);
+        if (tipe === 'ippm' || tipe === 'masyarakat') {
+            url = '<?= base_url('absensi/process-scan-agenda') ?>';
+            let sel = document.getElementById(tipe === 'ippm' ? 'agenda_ippm' : 'agenda_masyarakat');
+            let idAgenda = sel.value;
+            if(!idAgenda) {
+                Swal.fire('Error', 'Silakan pilih nama agenda terlebih dahulu!', 'warning').then(() => { isProcessing = false; });
                 return;
             }
-
-            formData.append('kategori', kategori);
-            formData.append('agenda_id', agendaId);
+            let namaAgenda = sel.options[sel.selectedIndex].getAttribute('data-name');
+            
+            bodyData = new URLSearchParams({
+                qr_code: decodedText,
+                latitude: userLat,
+                longitude: userLng,
+                kategori: tipe,
+                agenda_id: idAgenda,
+                nama_agenda: namaAgenda
+            });
         }
 
         Swal.fire({
-            title: 'Memproses...',
-            text: 'Mohon tunggu sebentar',
+            title: 'Memproses Data...',
+            html: 'Mencocokkan QR Code ke sistem.',
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => { Swal.showLoading(); }
         });
 
-        fetch(targetUrl, {
+        fetch(url, {
             method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: bodyData.toString()
         })
         .then(response => response.json())
         .then(data => {
@@ -288,24 +267,20 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
-                    html: `<b>${data.nama}</b><br>${data.message}<br>Jam: ${data.jam}`,
-                    timer: 4000,
+                    html: `<h4 class="fw-bold text-success">${data.nama}</h4><p class="mb-1">${data.message}</p><span class="badge bg-primary fs-6">${data.jam} WIB</span>`,
+                    timer: 3500,
                     showConfirmButton: false,
                     timerProgressBar: true
-                }).then(() => {
-                    isProcessing = false;
-                });
+                }).then(() => { isProcessing = false; });
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal',
                     text: data.messages ? JSON.stringify(data.messages) : (data.message || 'Terjadi kesalahan.'),
-                    timer: 4000,
+                    timer: 3500,
                     showConfirmButton: false,
                     timerProgressBar: true
-                }).then(() => {
-                    isProcessing = false;
-                });
+                }).then(() => { isProcessing = false; });
             }
         })
         .catch(error => {
@@ -313,26 +288,18 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Error Server',
-                text: 'Tidak dapat terhubung ke server. Coba lagi.',
-                timer: 4000,
+                text: 'Tidak dapat terhubung ke server.',
+                timer: 3000,
                 showConfirmButton: false
-            }).then(() => {
-                isProcessing = false;
-            });
+            }).then(() => { isProcessing = false; });
         });
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
-        { 
-            fps: 10, 
-            qrbox: {width: 250, height: 250},
-            aspectRatio: 1.0
-        },
+        { fps: 15, qrbox: {width: 250, height: 250}, aspectRatio: 1.0 },
         false
     );
-    
     html5QrcodeScanner.render(onScanSuccess);
 </script>
-
 <?= $this->endSection() ?>
