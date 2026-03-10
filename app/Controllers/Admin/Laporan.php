@@ -8,8 +8,6 @@ use App\Models\OrganisasiModel;
 use App\Models\RtModel;
 use App\Models\PengurusModel;
 use App\Models\AnggotaModel;
-use App\Models\SettingHariModel;
-use App\Models\LiburNasionalModel;
 
 class Laporan extends BaseController
 {
@@ -51,19 +49,30 @@ class Laporan extends BaseController
     {
         $absensiModel = new AbsensiModel();
         $organisasiModel = new OrganisasiModel();
+        
+        $tglAwal = $this->request->getGet('tgl_awal');
+        $tglAkhir = $this->request->getGet('tgl_akhir');
+        $rtId = $this->request->getGet('rt_id');
 
-        $tglAwal = $this->request->getPost('tgl_awal');
-        $tglAkhir = $this->request->getPost('tgl_akhir');
-        $rtId = $this->request->getPost('rt_id');
+        $laporan = $absensiModel->getLaporan($tglAwal, $tglAkhir, $type, $rtId);
 
-        $dataLaporan = $absensiModel->getLaporan($tglAwal, $tglAkhir, $type, $rtId);
-        $organisasi = $organisasiModel->first();
+        foreach ($laporan as &$row) {
+            if ($type == 'pengurus') {
+                $row['nama_lengkap'] = $row['nama_pengurus'];
+                $pengurus = (new PengurusModel())->find($row['user_id']);
+                $row['jabatan_or_rt'] = $pengurus ? $pengurus['jabatan'] : '-';
+            } else {
+                $row['nama_lengkap'] = $row['nama_anggota'];
+                $row['jabatan_or_rt'] = $row['nama_rt'];
+            }
+        }
 
         $data = [
-            'laporan' => $dataLaporan,
-            'organisasi' => $organisasi,
+            'title' => 'Cetak Detail Absensi Rapat ' . ucfirst($type),
+            'laporan' => $laporan,
             'tgl_awal' => $tglAwal,
-            'tgl_akhir' => $tglAkhir
+            'tgl_akhir' => $tglAkhir,
+            'organisasi' => $organisasiModel->first()
         ];
 
         return view($view, $data);
@@ -81,182 +90,148 @@ class Laporan extends BaseController
 
     private function processRekap($type, $view)
     {
+        $bulan = $this->request->getGet('bulan') ?? date('m');
+        $tahun = $this->request->getGet('tahun') ?? date('Y');
+        $rtId = $this->request->getGet('rt_id');
+
         $absensiModel = new AbsensiModel();
         $organisasiModel = new OrganisasiModel();
-        $rtModel = new RtModel();
-        $pengurusModel = new PengurusModel();
-        $anggotaModel = new AnggotaModel();
-        $liburModel = new LiburNasionalModel();
-
-        $bulan = $this->request->getPost('bulan');
-        $tahun = $this->request->getPost('tahun');
-        $rtId = $this->request->getPost('rt_id');
-
-        $rekapAbsen = $absensiModel->getRekapBulanan($bulan, $tahun, $type, $rtId);
-        $organisasi = $organisasiModel->first();
-
+        
         $users = [];
-        $infoRT = '';
-
         if ($type == 'pengurus') {
-            $users = $pengurusModel->findAll();
+            $users = (new PengurusModel())->findAll();
         } else {
             if ($rtId) {
-                $users = $anggotaModel->where('rt_id', $rtId)->findAll();
-                $rt = $rtModel->find($rtId);
-                $infoRT = $rt ? $rt['nama_rt'] : '';
+                $users = (new AnggotaModel())->where('rt_id', $rtId)->findAll();
             } else {
-                $users = $anggotaModel->findAll();
+                $users = (new AnggotaModel())->findAll();
             }
         }
 
-        $namaBulan = [
-            1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni',
-            7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'
-        ];
+        $rekap = $absensiModel->getRekapBulanan($bulan, $tahun, $type, $rtId);
 
-        // Ambil Setting Hari (Mana yg Libur Rutin)
-        $settingHariModel = new SettingHariModel();
-        $settings = $settingHariModel->findAll();
-        $hariEfektifNames = [];
-        foreach($settings as $s) {
-            if($s['tampilkan'] == 1) $hariEfektifNames[] = $s['nama_hari'];
-        }
-        
-        // Ambil Libur Nasional
-        $tglAwalBulan = "$tahun-$bulan-01";
-        $tglAkhirBulan = date('Y-m-t', strtotime($tglAwalBulan));
-        
-        $liburData = $liburModel->where('tanggal_akhir >=', $tglAwalBulan)
-                                ->where('tanggal_mulai <=', $tglAkhirBulan)
-                                ->findAll();
-        
-        $listLiburNasional = [];
-        foreach ($liburData as $l) {
-            $period = new \DatePeriod(
-                new \DateTime($l['tanggal_mulai']),
-                new \DateInterval('P1D'),
-                (new \DateTime($l['tanggal_akhir']))->modify('+1 day')
-            );
-            foreach ($period as $dt) {
-                if ($dt->format('n') == $bulan && $dt->format('Y') == $tahun) {
-                    $listLiburNasional[] = $dt->format('Y-m-d');
-                }
-            }
-        }
+        $rapatDatesQuery = $this->db->table('absensi')
+            ->select('tanggal')
+            ->where('user_type', $type)
+            ->where('MONTH(tanggal)', $bulan)
+            ->where('YEAR(tanggal)', $tahun)
+            ->groupBy('tanggal')
+            ->get()->getResultArray();
+        $rapatDates = array_column($rapatDatesQuery, 'tanggal');
 
         $data = [
+            'title' => 'Cetak Rekap Absensi Rapat ' . ucfirst($type),
             'users' => $users,
-            'rekap' => $rekapAbsen,
-            'organisasi' => $organisasi,
+            'rekap' => $rekap,
+            'organisasi' => $organisasiModel->first(),
             'bulan' => $bulan,
             'tahun' => $tahun,
-            'jumlah_hari' => cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun),
-            'info_rt' => $infoRT,
-            'hari_efektif' => $hariEfektifNames, 
-            'libur_nasional' => $listLiburNasional,
-            'namaBulan' => $namaBulan
+            'rapatDates' => $rapatDates,
+            'namaBulan' => ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
         ];
 
         return view($view, $data);
     }
 
-    public function cetakMatriksBulanan()
+    public function cetakMatriksBulan()
     {
-        return $this->processRekap('anggota', 'admin/laporan/cetak_matriks_bulan');
-    }
+        $bulan = $this->request->getGet('bulan') ?? date('m');
+        $tahun = $this->request->getGet('tahun') ?? date('Y');
+        $rtId = $this->request->getGet('rt_id');
+        $userType = $this->request->getGet('user_type') ?? 'anggota';
 
-    public function cetakMatriksTahunan()
-    {
         $absensiModel = new AbsensiModel();
         $organisasiModel = new OrganisasiModel();
-        $rtModel = new RtModel();
-        $anggotaModel = new AnggotaModel();
-        $liburModel = new LiburNasionalModel();
-        $settingHariModel = new SettingHariModel();
-
-        $tahun = $this->request->getPost('tahun');
-        $rtId = $this->request->getPost('rt_id');
 
         $users = [];
-        $infoRT = '';
-        if ($rtId) {
-            $users = $anggotaModel->where('rt_id', $rtId)->findAll();
-            $rt = $rtModel->find($rtId);
-            $infoRT = $rt ? $rt['nama_rt'] : '';
+        if ($userType == 'pengurus') {
+            $users = (new PengurusModel())->findAll();
         } else {
-            $users = $anggotaModel->findAll();
-        }
-
-        $rekapTahun = $absensiModel->getRekapTahunan($tahun, 'anggota', $rtId);
-        $organisasi = $organisasiModel->first();
-
-        // --- Perbaikan Logika Hitung Hari Efektif Tahunan ---
-        
-        // 1. Ambil Hari Libur Rutin (Minggu, dll)
-        $settingHari = $settingHariModel->findAll();
-        $hariLiburRutin = []; 
-        foreach($settingHari as $h) {
-            if($h['tampilkan'] == 0) $hariLiburRutin[] = $h['nama_hari'];
-        }
-
-        // 2. Ambil Libur Nasional setahun penuh
-        $liburNasional = $liburModel->where('YEAR(tanggal_mulai)', $tahun)
-                                    ->orWhere('YEAR(tanggal_akhir)', $tahun)
-                                    ->findAll();
-        
-        $arrLiburNasional = [];
-        foreach ($liburNasional as $l) {
-            $period = new \DatePeriod(
-                new \DateTime($l['tanggal_mulai']),
-                new \DateInterval('P1D'),
-                (new \DateTime($l['tanggal_akhir']))->modify('+1 day')
-            );
-            foreach ($period as $dt) {
-                if ($dt->format('Y') == $tahun) {
-                    $arrLiburNasional[] = $dt->format('Y-m-d');
-                }
+            if ($rtId) {
+                $users = (new AnggotaModel())->where('rt_id', $rtId)->findAll();
+            } else {
+                $users = (new AnggotaModel())->findAll();
             }
         }
 
-        $effectiveDaysPerMonth = [];
-        $mapHari = [
-            'Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
-            'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'
+        $rekap = $absensiModel->getRekapBulanan($bulan, $tahun, $userType, $rtId);
+
+        $rapatDatesQuery = $this->db->table('absensi')
+            ->select('tanggal')
+            ->where('user_type', $userType)
+            ->where('MONTH(tanggal)', $bulan)
+            ->where('YEAR(tanggal)', $tahun)
+            ->groupBy('tanggal')
+            ->get()->getResultArray();
+        $rapatDates = array_column($rapatDatesQuery, 'tanggal');
+
+        $rtName = '';
+        if ($rtId) {
+            $rtData = (new RtModel())->find($rtId);
+            if ($rtData) $rtName = $rtData['nama_rt'];
+        }
+
+        $data = [
+            'users' => $users,
+            'rekap' => $rekap,
+            'organisasi' => $organisasiModel->first(),
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'rapatDates' => $rapatDates,
+            'info_rt' => $rtName,
+            'namaBulan' => ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
         ];
 
-        for($m=1; $m<=12; $m++) {
-            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $m, $tahun);
-            $effCount = 0;
-            for($d=1; $d<=$daysInMonth; $d++) {
-                // Gunakan format Y-m-d yang baku
-                $currentDate = sprintf("%04d-%02d-%02d", $tahun, $m, $d);
-                $dayNameInggris = date('l', strtotime($currentDate));
-                $dayNameIndo = $mapHari[$dayNameInggris];
+        return view('admin/laporan/cetak_matriks_bulan', $data);
+    }
 
-                // Cek Libur Rutin
-                if(in_array($dayNameIndo, $hariLiburRutin)) {
-                    continue; // Skip jika hari ini memang libur rutin (misal Minggu)
-                }
+    public function cetakMatriksTahun()
+    {
+        $tahun = $this->request->getGet('tahun') ?? date('Y');
+        $rtId = $this->request->getGet('rt_id');
+        $userType = $this->request->getGet('user_type') ?? 'anggota';
 
-                // Cek Libur Nasional
-                if(in_array($currentDate, $arrLiburNasional)) {
-                    continue; // Skip jika hari ini tanggal merah
-                }
+        $absensiModel = new AbsensiModel();
+        $organisasiModel = new OrganisasiModel();
 
-                $effCount++;
+        $users = [];
+        if ($userType == 'pengurus') {
+            $users = (new PengurusModel())->findAll();
+        } else {
+            if ($rtId) {
+                $users = (new AnggotaModel())->where('rt_id', $rtId)->findAll();
+            } else {
+                $users = (new AnggotaModel())->findAll();
             }
-            $effectiveDaysPerMonth[$m] = $effCount;
         }
-        // -----------------------------------------------------------
+
+        $rekapTahun = $absensiModel->getRekapTahunan($tahun, $userType, $rtId);
+
+        $rapatCountPerMonth = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $count = $this->db->table('absensi')
+                ->select('tanggal')
+                ->where('user_type', $userType)
+                ->where('MONTH(tanggal)', $m)
+                ->where('YEAR(tanggal)', $tahun)
+                ->groupBy('tanggal')
+                ->countAllResults();
+            $rapatCountPerMonth[$m] = $count;
+        }
+
+        $rtName = '';
+        if ($rtId) {
+            $rtData = (new RtModel())->find($rtId);
+            if ($rtData) $rtName = $rtData['nama_rt'];
+        }
 
         $data = [
             'users' => $users,
             'rekap' => $rekapTahun,
-            'organisasi' => $organisasi,
+            'organisasi' => $organisasiModel->first(),
             'tahun' => $tahun,
-            'info_rt' => $infoRT,
-            'effective_days' => $effectiveDaysPerMonth
+            'rapatCountPerMonth' => $rapatCountPerMonth,
+            'info_rt' => $rtName
         ];
 
         return view('admin/laporan/cetak_matriks_tahun', $data);

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Models\LiburNasionalModel;
 
 class AbsensiModel extends Model
 {
@@ -15,123 +14,27 @@ class AbsensiModel extends Model
         'status', 'keterangan', 'lokasi_lat', 'lokasi_long'
     ];
 
-    private function getHariIndo($dateStr) {
-        $hariInggris = date('l', strtotime($dateStr));
-        $map = [
-            'Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
-            'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'
-        ];
-        return $map[$hariInggris];
-    }
-
-    private function getSettingHariArray() {
-        $db = \Config\Database::connect();
-        $settings = $db->table('setting_hari')->get()->getResultArray();
-        $result = [];
-        foreach ($settings as $s) {
-            $result[$s['nama_hari']] = $s['tampilkan'];
-        }
-        return $result;
-    }
-
-    private function getLiburDates($startDate, $endDate) {
-        $liburModel = new LiburNasionalModel();
-        $liburData = $liburModel->where('tanggal_akhir >=', $startDate)
-                                ->where('tanggal_mulai <=', $endDate)
-                                ->findAll();
-        $liburDates = [];
-        foreach ($liburData as $l) {
-            $period = new \DatePeriod(
-                new \DateTime($l['tanggal_mulai']),
-                new \DateInterval('P1D'),
-                (new \DateTime($l['tanggal_akhir']))->modify('+1 day')
-            );
-            foreach ($period as $dt) {
-                $liburDates[] = $dt->format('Y-m-d');
-            }
-        }
-        return $liburDates;
-    }
-
     public function getLaporan($tglAwal, $tglAkhir, $userType, $rtId = null)
     {
-        $db = \Config\Database::connect();
-        $settingHari = $this->getSettingHariArray();
-        $liburDates = $this->getLiburDates($tglAwal, $tglAkhir);
+        $builder = $this->db->table($this->table);
+        $builder->select('absensi.*, anggota.nama_lengkap as nama_anggota, pengurus.nama_lengkap as nama_pengurus, rt.nama_rt');
+        $builder->join('anggota', 'anggota.id = absensi.user_id AND absensi.user_type = "anggota"', 'left');
+        $builder->join('pengurus', 'pengurus.id = absensi.user_id AND absensi.user_type = "pengurus"', 'left');
+        $builder->join('rt', 'rt.id = anggota.rt_id', 'left');
 
-        $users = [];
-        if ($userType == 'pengurus') {
-            $users = $db->table('pengurus')->get()->getResultArray();
-        } else {
-            $builder = $db->table('anggota');
-            if ($rtId) {
-                $builder->where('rt_id', $rtId);
-            }
-            $users = $builder->get()->getResultArray();
+        if ($userType) {
+            $builder->where('absensi.user_type', $userType);
         }
-
-        $absensiData = $this->where('user_type', $userType)
-                            ->where('tanggal >=', $tglAwal)
-                            ->where('tanggal <=', $tglAkhir)
-                            ->findAll();
-
-        $absensiMap = [];
-        foreach ($absensiData as $absen) {
-            $absensiMap[$absen['user_id']][$absen['tanggal']] = $absen;
+        if ($rtId) {
+            $builder->where('anggota.rt_id', $rtId);
         }
+        
+        $builder->where('absensi.tanggal >=', $tglAwal);
+        $builder->where('absensi.tanggal <=', $tglAkhir);
+        $builder->orderBy('absensi.tanggal', 'DESC');
+        $builder->orderBy('absensi.jam_masuk', 'DESC');
 
-        $finalData = [];
-        $currentDate = strtotime($tglAwal);
-        $endDate = strtotime($tglAkhir);
-
-        while ($currentDate <= $endDate) {
-            $dateStr = date('Y-m-d', $currentDate);
-            $hariIndo = $this->getHariIndo($dateStr);
-            $isLiburNasional = in_array($dateStr, $liburDates);
-            $isHariAktif = ($settingHari[$hariIndo] == 1);
-
-            foreach ($users as $user) {
-                $userId = $user['id'];
-                $absen = isset($absensiMap[$userId][$dateStr]) ? $absensiMap[$userId][$dateStr] : null;
-
-                if ($absen) {
-                    $finalData[] = array_merge($absen, [
-                        'nama_lengkap' => $user['nama_lengkap'],
-                        'jabatan_or_rt' => ($userType == 'pengurus') ? $user['jabatan'] : 'Anggota',
-                        'hari_indo' => $hariIndo
-                    ]);
-                } else {
-                    if (!$isHariAktif || $isLiburNasional) {
-                        continue; 
-                    }
-                    $finalData[] = [
-                        'id' => null,
-                        'user_type' => $userType,
-                        'user_id' => $userId,
-                        'nama_lengkap' => $user['nama_lengkap'],
-                        'jabatan_or_rt' => ($userType == 'pengurus') ? $user['jabatan'] : 'Anggota',
-                        'tanggal' => $dateStr,
-                        'hari_indo' => $hariIndo,
-                        'jam_masuk' => '-',
-                        'jam_pulang' => '-',
-                        'status' => 'Alfa',
-                        'keterangan' => '',
-                        'lokasi_lat' => null,
-                        'lokasi_long' => null
-                    ];
-                }
-            }
-            $currentDate = strtotime("+1 day", $currentDate);
-        }
-
-        usort($finalData, function($a, $b) {
-            if ($a['tanggal'] == $b['tanggal']) {
-                return strcmp($a['nama_lengkap'], $b['nama_lengkap']);
-            }
-            return strcmp($a['tanggal'], $b['tanggal']);
-        });
-
-        return $finalData;
+        return $builder->get()->getResultArray();
     }
 
     public function getKoreksiData($tglAwal, $tglAkhir, $userType, $rtId = null)
@@ -143,7 +46,7 @@ class AbsensiModel extends Model
     {
         $builder = $this->db->table($this->table);
         $builder->select('absensi.user_id, DAY(absensi.tanggal) as hari, absensi.status');
-        
+
         if ($userType == 'anggota' && $rtId) {
             $builder->join('anggota', 'anggota.id = absensi.user_id', 'left');
             $builder->where('anggota.rt_id', $rtId);
@@ -152,7 +55,7 @@ class AbsensiModel extends Model
         $builder->where('absensi.user_type', $userType);
         $builder->where('MONTH(absensi.tanggal)', $bulan);
         $builder->where('YEAR(absensi.tanggal)', $tahun);
-        
+
         $query = $builder->get()->getResultArray();
 
         $rekap = [];
@@ -193,8 +96,11 @@ class AbsensiModel extends Model
             elseif ($sts == 'Izin') $rekap[$uid][$bln]['I']++;
             elseif ($sts == 'Alfa') $rekap[$uid][$bln]['A']++;
             elseif ($sts == 'Terlambat') {
-                $rekap[$uid][$bln]['H']++;
                 $rekap[$uid][$bln]['T']++;
+                $rekap[$uid][$bln]['H']++;
+            }
+            elseif ($sts == 'Cepat Pulang') {
+                $rekap[$uid][$bln]['H']++;
             }
         }
 

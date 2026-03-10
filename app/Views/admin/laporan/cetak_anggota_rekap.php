@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Rekap Absensi Anggota</title>
+    <title>Rekap Absensi Rapat Anggota</title>
     <link rel="icon" href="<?= base_url('assets/icon.ico') ?>" type="image/x-icon">
     <style>
         @page { size: landscape; margin: 10mm; }
@@ -16,99 +16,75 @@
         .status-s { background-color: #cff4fc; } 
         .status-i { background-color: #fff3cd; } 
         .status-a { background-color: #f8d7da; } 
-        .bg-libur { background-color: #e9ecef; } /* Abu-abu untuk libur */
+        .bg-libur { background-color: #e9ecef; }
         
-        .header { margin-bottom: 20px; border-bottom: 3px double #000; padding-bottom: 10px; position: relative; }
-        .logo { position: absolute; left: 0; top: 0; width: 70px; height: auto; }
-        .org-name { font-size: 18px; font-weight: bold; text-transform: uppercase; margin: 0; }
-        .org-address { font-size: 12px; margin: 5px 0 0; }
+        .header { margin-bottom: 20px; border-bottom: 2px double #000; padding-bottom: 10px; }
     </style>
 </head>
 <body onload="window.print()">
     <div class="header">
-        <?php if ($organisasi['logo']): ?>
-            <img src="<?= base_url('uploads/logo/' . $organisasi['logo']) ?>" class="logo" alt="Logo">
-        <?php endif; ?>
-        <div style="margin-left: 80px;">
-            <p class="org-name"><?= $organisasi['nama_organisasi'] ?></p>
-            <p class="org-address"><?= $organisasi['alamat_lengkap'] ?></p>
-        </div>
+        <h3 style="margin:0;"><?= strtoupper($organisasi['nama_organisasi']) ?></h3>
+        <p style="margin:5px 0;"><?= $organisasi['alamat_lengkap'] ?></p>
+        <h3 style="margin:10px 0 0 0;">REKAPITULASI ABSENSI RAPAT ANGGOTA</h3>
+        <p style="margin:0;">Bulan: <?= $namaBulan[(int)$bulan] ?> <?= $tahun ?></p>
     </div>
-
-    <h3>REKAPITULASI KEHADIRAN ANGGOTA</h3>
-    <p>Bulan: <?= $namaBulan[$bulan] ?> <?= $tahun ?> <?= $info_rt ? '| RT: '.$info_rt : '' ?></p>
 
     <table class="table-rekap">
         <thead>
             <tr>
-                <th rowspan="2" width="30">No</th>
-                <th rowspan="2" class="text-left" width="200">Nama Anggota</th>
-                <th colspan="<?= $jumlah_hari ?>">Tanggal</th>
-                <th colspan="4">Total</th>
+                <td rowspan="2" width="30"><strong>No</strong></td>
+                <td rowspan="2" class="text-left" width="200"><strong>Nama Anggota</strong></td>
+                <td colspan="<?= cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun) ?>"><strong>Tanggal Rapat</strong></td>
+                <td colspan="4"><strong>Total</strong></td>
             </tr>
             <tr>
-                <?php for($d=1; $d<=$jumlah_hari; $d++): ?>
-                    <th style="font-size: 9px; width: 20px;"><?= $d ?></th>
+                <?php 
+                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                for($d=1; $d<=$daysInMonth; $d++): 
+                ?>
+                <td width="20"><strong><?= $d ?></strong></td>
                 <?php endfor; ?>
-                <th width="30">H</th>
-                <th width="30">S</th>
-                <th width="30">I</th>
-                <th width="30">A</th>
+                <td width="30" class="status-h"><strong>H</strong></td>
+                <td width="30" class="status-s"><strong>S</strong></td>
+                <td width="30" class="status-i"><strong>I</strong></td>
+                <td width="30" class="status-a"><strong>A</strong></td>
             </tr>
         </thead>
         <tbody>
-            <?php 
-            $mapHari = [
-                'Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
-                'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'
-            ];
-
-            foreach($users as $k => $u): ?>
+            <?php foreach($users as $key => $u): ?>
             <tr>
-                <td><?= $k+1 ?></td>
+                <td><?= $key+1 ?></td>
                 <td class="text-left"><?= $u['nama_lengkap'] ?></td>
                 
                 <?php 
-                    $h=0; $s=0; $i=0; $a=0;
-                    for($d=1; $d<=$jumlah_hari; $d++):
-                        $tgl = sprintf("%04d-%02d-%02d", $tahun, $bulan, $d);
-                        $statusRaw = isset($rekap[$u['id']][$d]) ? $rekap[$u['id']][$d] : '';
-                        
-                        $dayNameIng = date('l', strtotime($tgl));
-                        $dayNameInd = $mapHari[$dayNameIng];
+                $h=0; $s=0; $i=0; $a=0;
 
-                        // Cek Libur
-                        $isLiburNasional = in_array($tgl, $libur_nasional);
-                        $isHariEfektif = in_array($dayNameInd, $hari_efektif); 
-                        
-                        $bg = '';
-                        $tampil = '';
+                for($d=1; $d<=$daysInMonth; $d++): 
+                    $currentDate = sprintf("%04d-%02d-%02d", $tahun, $bulan, $d);
+                    $isRapatDay = in_array($currentDate, $rapatDates);
+                    $bg = ''; $tampil = '';
 
-                        if($statusRaw) {
-                            // Jika ada data absensi
-                            $tampil = substr($statusRaw, 0, 1); 
-                            if($statusRaw == 'Hadir' || $statusRaw == 'Terlambat' || $statusRaw == 'Cepat Pulang') { 
-                                $h++; $bg='status-h'; $tampil='•';
-                            } elseif($statusRaw == 'Sakit') { 
-                                $s++; $bg='status-s'; $tampil='S';
-                            } elseif($statusRaw == 'Izin') { 
-                                $i++; $bg='status-i'; $tampil='I';
-                            } elseif($statusRaw == 'Alfa') { 
-                                $a++; $bg='status-a'; $tampil='A';
-                            }
-                        } else {
-                            // Jika TIDAK ada data absensi
-                            if ($isLiburNasional || !$isHariEfektif) {
-                                // Hari Libur -> Kosongkan
-                                $bg = 'bg-libur';
-                                $tampil = ''; 
-                            } else {
-                                // Hari Efektif tapi tidak absen -> Otomatis Alfa
-                                $a++; 
-                                $bg = 'status-a'; 
-                                $tampil = 'A';
-                            }
+                    if(isset($rekap[$u['id']][$d])) {
+                        $statusRaw = $rekap[$u['id']][$d];
+                        if($statusRaw == 'Hadir' || $statusRaw == 'Terlambat' || $statusRaw == 'Cepat Pulang') { 
+                            $h++; $bg='status-h'; $tampil='H';
+                        } elseif($statusRaw == 'Sakit') { 
+                            $s++; $bg='status-s'; $tampil='S';
+                        } elseif($statusRaw == 'Izin') { 
+                            $i++; $bg='status-i'; $tampil='I';
+                        } elseif($statusRaw == 'Alfa') { 
+                            $a++; $bg='status-a'; $tampil='A';
                         }
+                    } else {
+                        if ($isRapatDay) {
+                            $a++; 
+                            $bg = 'status-a'; 
+                            $tampil = 'A';
+                        } else {
+                            $bg = 'bg-libur'; 
+                            $tampil = ''; 
+                        }
+                    }
                 ?>
                     <td class="<?= $bg ?>"><?= $tampil ?></td>
                 <?php endfor; ?>
@@ -124,7 +100,7 @@
 
     <div style="margin-top: 30px; float: right; width: 200px; text-align: center;">
         <p><?= isset($organisasi['kabupaten']) ? $organisasi['kabupaten'] : 'Tempat' ?>, <?= date('d') ?> <?= $namaBulan[(int)date('m')] ?> <?= date('Y') ?></p>
-        <p>Kepala Instansi</p>
+        <p>Ketua Organisasi</p>
         <br><br><br>
         <p><b><?= $organisasi['kepala_instansi'] ?></b></p>
     </div>

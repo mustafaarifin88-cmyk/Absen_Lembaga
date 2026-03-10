@@ -19,73 +19,68 @@
 <body onload="window.print()">
     <div class="header">
         <h3 style="margin:0;"><?= strtoupper($organisasi['nama_organisasi']) ?></h3>
-        <p style="margin:5px 0;">MATRIKS KEHADIRAN ANGGOTA - <?= strtoupper($namaBulan[$bulan]) ?> <?= $tahun ?></p>
+        <p style="margin:5px 0;">MATRIKS KEHADIRAN RAPAT</p>
+        <p style="margin:0;">Bulan: <?= $namaBulan[(int)$bulan] ?> <?= $tahun ?></p>
         <?php if($info_rt): ?><p style="margin:0;">RT: <?= $info_rt ?></p><?php endif; ?>
     </div>
 
     <table class="table-matriks">
         <thead>
             <tr>
-                <th rowspan="2" style="width: 20px;">No</th>
+                <th rowspan="2" width="20">No</th>
                 <th rowspan="2" class="th-nama">Nama Anggota</th>
-                <th colspan="<?= $jumlah_hari ?>">Tanggal</th>
+                <th colspan="<?= cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun) ?>">Tanggal Rapat</th>
                 <th colspan="4">Total</th>
             </tr>
             <tr>
-                <?php for($d=1; $d<=$jumlah_hari; $d++): ?>
-                    <th><?= $d ?></th>
+                <?php 
+                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+                for($d=1; $d<=$daysInMonth; $d++): 
+                ?>
+                <th width="15"><?= $d ?></th>
                 <?php endfor; ?>
-                <th>H</th><th>S</th><th>I</th><th>A</th>
+                <th width="20">H</th>
+                <th width="20">S</th>
+                <th width="20">I</th>
+                <th width="20">A</th>
             </tr>
         </thead>
         <tbody>
-            <?php 
-            $mapHari = [
-                'Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
-                'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'
-            ];
-
-            foreach($users as $k => $u): ?>
+            <?php foreach($users as $key => $u): ?>
                 <tr>
-                    <td><?= $k+1 ?></td>
-                    <td style="text-align:left; padding-left:5px; white-space:nowrap; overflow:hidden;"><?= $u['nama_lengkap'] ?></td>
+                    <td><?= $key+1 ?></td>
+                    <td class="th-nama"><?= $u['nama_lengkap'] ?></td>
                     <?php 
-                        $h=0; $s=0; $i=0; $a=0;
-                        for($d=1; $d<=$jumlah_hari; $d++):
-                            // PERBAIKAN: Format tanggal harus Y-m-d dengan leading zero (2024-02-08)
-                            $tgl = sprintf("%04d-%02d-%02d", $tahun, $bulan, $d);
-                            
-                            $status = isset($rekap[$u['id']][$d]) ? $rekap[$u['id']][$d] : '';
-                            
-                            $dayNameIng = date('l', strtotime($tgl));
-                            $dayNameInd = $mapHari[$dayNameIng];
+                    $h=0; $s=0; $i=0; $a=0;
 
-                            // Cek Libur Nasional & Hari Efektif
-                            $isLiburNasional = in_array($tgl, $libur_nasional);
-                            $isHariEfektif = in_array($dayNameInd, $hari_efektif); 
-                            
-                            $bgClass = '';
-                            $symbol = '';
+                    for($d=1; $d<=$daysInMonth; $d++): 
+                        $currentDate = sprintf("%04d-%02d-%02d", $tahun, $bulan, $d);
+                        $isRapatDay = in_array($currentDate, $rapatDates);
+                        $bgClass = ''; $symbol = '';
 
-                            if($status) {
-                                // Jika ada data absensi, tampilkan sesuai status
-                                if($status == 'Hadir' || $status == 'Terlambat') { $h++; $bgClass = 'cell-hadir'; $symbol = '•'; }
-                                elseif($status == 'Sakit') { $s++; $bgClass = 'cell-sakit'; $symbol = 'S'; }
-                                elseif($status == 'Izin') { $i++; $bgClass = 'cell-izin'; $symbol = 'I'; }
-                                elseif($status == 'Alfa') { $a++; $bgClass = 'cell-alfa'; $symbol = 'A'; }
-                                elseif($status == 'Cepat Pulang') { $h++; $bgClass = 'cell-hadir'; $symbol = '•'; } 
-                            } else {
-                                // Jika TIDAK ada data absensi
-                                if ($isLiburNasional || !$isHariEfektif) {
-                                    // Jika hari libur nasional ATAU bukan hari kerja (misal Minggu) -> Libur
-                                    $bgClass = 'cell-libur'; 
-                                } else {
-                                    // Hari efektif tapi tidak absen -> Otomatis Alfa
-                                    $a++; 
-                                    $bgClass = 'cell-alfa'; 
-                                    $symbol = 'A';
-                                }
+                        if(isset($rekap[$u['id']][$d])) {
+                            $status = $rekap[$u['id']][$d];
+                            if($status == 'Hadir' || $status == 'Terlambat' || $status == 'Cepat Pulang') { 
+                                $h++; $bgClass = 'cell-hadir'; $symbol = '•'; 
                             }
+                            elseif($status == 'Sakit') { 
+                                $s++; $bgClass = 'cell-sakit'; $symbol = 'S'; 
+                            }
+                            elseif($status == 'Izin') { 
+                                $i++; $bgClass = 'cell-izin'; $symbol = 'I'; 
+                            }
+                            elseif($status == 'Alfa') { 
+                                $a++; $bgClass = 'cell-alfa'; $symbol = 'A'; 
+                            }
+                        } else {
+                            if ($isRapatDay) {
+                                $a++; 
+                                $bgClass = 'cell-alfa'; 
+                                $symbol = 'A';
+                            } else {
+                                $bgClass = 'cell-libur'; 
+                            }
+                        }
                     ?>
                         <td class="<?= $bgClass ?>"><?= $symbol ?></td>
                     <?php endfor; ?>
@@ -96,7 +91,7 @@
     </table>
     
     <div style="margin-top:10px; font-size:9px;">
-        <strong>Keterangan:</strong> • : Hadir, S : Sakit, I : Izin, A : Alfa (Termasuk Otomatis)
+        <strong>Keterangan:</strong> • : Hadir, S : Sakit, I : Izin, A : Alfa
     </div>
 </body>
 </html>

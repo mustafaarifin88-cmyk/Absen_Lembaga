@@ -27,368 +27,147 @@ $namaOrg = ($orgData && !empty($orgData['nama_organisasi'])) ? $orgData['nama_or
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         border-radius: 0 20px 20px 0;
         transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s;
-        z-index: 1000;
-        overflow-x: hidden;
-        width: 300px; /* Lebar default sidebar */
-    }
-
-    .btn-minimize {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(67, 94, 190, 0.1);
-        border: none;
-        color: #435ebe;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .btn-minimize:hover {
-        background: #435ebe;
-        color: white;
-    }
-
-    .sidebar-header {
-        padding: 2rem 1rem;
-        text-align: center;
-    }
-
-    /* === PERBAIKAN UKURAN LOGO === */
-    .sidebar-logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-
-    .sidebar-logo img {
-        width: 150px; /* Setengah dari lebar sidebar (300px / 2) */
-        height: 150px; /* Tinggi disamakan agar square/circle rapi */
-        object-fit: contain;
-        border-radius: 12px;
-        filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
-        transition: all 0.3s ease; /* Animasi halus */
-    }
-
-    .app-name {
-        font-weight: 800;
-        font-size: 1.1rem;
-        color: #435ebe;
-        margin-top: 15px;
-        display: block;
-        letter-spacing: 0.5px;
-        line-height: 1.2;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .menu {
-        padding: 0 1rem;
-        margin-top: 1rem;
-    }
-
-    .sidebar-title {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: #888;
-        text-transform: uppercase;
-        margin: 1.5rem 0 0.5rem 1rem;
-        letter-spacing: 1px;
-    }
-
-    .sidebar-item {
-        margin-bottom: 5px;
-        list-style: none;
-    }
-
-    .sidebar-link {
-        display: flex;
-        align-items: center;
-        padding: 12px 15px;
-        border-radius: 12px;
-        color: #607080;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .sidebar-link i {
-        font-size: 1.1rem;
-        margin-right: 12px;
-        color: #435ebe;
-        transition: all 0.3s;
-    }
-
-    .sidebar-link:hover {
-        background-color: rgba(67, 94, 190, 0.08);
-        color: #435ebe;
-        transform: translateX(5px);
-    }
-
-    .sidebar-item.active .sidebar-link {
-        background: linear-gradient(135deg, #435ebe 0%, #25396f 100%);
-        color: white;
-        box-shadow: 0 5px 15px rgba(67, 94, 190, 0.3);
-    }
-
-    .sidebar-item.active .sidebar-link i {
-        color: white;
-    }
-
-    /* === MINI SIDEBAR STYLES === */
-    body.mini-sidebar .sidebar-wrapper {
-        width: 80px;
-    }
-    
-    /* Paksa logo mengecil saat minimize */
-    body.mini-sidebar .sidebar-logo img {
-        width: 40px !important;
-        height: 40px !important;
-    }
-    
-    body.mini-sidebar .app-name, 
-    body.mini-sidebar .sidebar-title,
-    body.mini-sidebar .sidebar-link span {
-        display: none !important;
-        opacity: 0;
-    }
-
-    body.mini-sidebar .sidebar-header {
-        padding: 1rem 0;
-    }
-
-    body.mini-sidebar .sidebar-link {
-        justify-content: center;
-        padding: 12px 0;
-    }
-
-    body.mini-sidebar .sidebar-link i {
-        margin-right: 0;
-        font-size: 1.4rem;
-    }
-
-    body.mini-sidebar .sidebar-link::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        left: 100%;
-        top: 50%;
-        transform: translateY(-50%);
-        background: #333;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 0.8rem;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: 0.3s;
-        z-index: 9999;
-        margin-left: 10px;
-    }
-
-    body.mini-sidebar .sidebar-link:hover::after {
-        opacity: 1;
-    }
-
-    .btn-logout-sidebar {
-        background: #ffeaea !important;
-        color: #ff4c4c !important;
-    }
-    
-    .btn-logout-sidebar i {
-        color: #ff4c4c !important;
-    }
-
-    .btn-logout-sidebar:hover {
-        background: #ff4c4c !important;
-        color: white !important;
-    }
-    
-    .btn-logout-sidebar:hover i {
-        color: white !important;
     }
 </style>
 
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header position-relative">
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="sidebar-logo">
-                    <img src="<?= base_url('uploads/logo/' . $logoOrg) ?>" alt="Logo Organisasi">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a href="<?= base_url($role.'/dashboard') ?>"><img src="<?= base_url('uploads/logo/' . $logoOrg) ?>" alt="Logo"></a>
+                </div>
+                <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path><g transform="translate(-210 -1)"><path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path><circle cx="220.5" cy="11.5" r="4"></circle><path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path></g></g></svg>
+                    <div class="form-check form-switch fs-6">
+                        <input class="form-check-input me-0" type="checkbox" id="toggle-dark" style="cursor: pointer">
+                        <label class="form-check-label"></label>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+                </div>
+                <div class="sidebar-toggler x">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>
             </div>
-            <span class="app-name"><?= $namaOrg ?></span>
         </div>
-        
         <div class="sidebar-menu">
             <ul class="menu">
-                
                 <li class="sidebar-title">Menu Utama</li>
-
-                <?php if ($role == 'admin') : ?>
+                
+                <?php if($role == 'admin'): ?>
                 <li class="sidebar-item <?= ($segment == 'dashboard') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/dashboard') ?>" class='sidebar-link' data-tooltip="Dashboard">
+                    <a href="<?= base_url('admin/dashboard') ?>" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item <?= ($segment == 'organisasi') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/organisasi') ?>" class='sidebar-link' data-tooltip="Profil Organisasi">
+                
+                <li class="sidebar-item <?= in_array($segment, ['organisasi', 'data-rt', 'pengurus', 'anggota', 'cetak-kartu']) ? 'active' : '' ?> has-sub">
+                    <a href="#" class='sidebar-link'>
                         <i class="bi bi-building"></i>
-                        <span>Profil Organisasi</span>
+                        <span>Data Master</span>
                     </a>
-                </li>
-
-                <li class="sidebar-title">Data Master</li>
-
-                <li class="sidebar-item <?= ($segment == 'data-rt') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/data-rt') ?>" class='sidebar-link' data-tooltip="Data RT">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <span>Data RT</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'pengurus') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/pengurus') ?>" class='sidebar-link' data-tooltip="Data Pengurus">
-                        <i class="bi bi-person-badge-fill"></i>
-                        <span>Data Pengurus</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'anggota') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/anggota') ?>" class='sidebar-link' data-tooltip="Data Anggota">
-                        <i class="bi bi-people-fill"></i>
-                        <span>Data Anggota</span>
-                    </a>
+                    <ul class="submenu <?= in_array($segment, ['organisasi', 'data-rt', 'pengurus', 'anggota', 'cetak-kartu']) ? 'active' : '' ?>">
+                        <li class="submenu-item <?= ($segment == 'organisasi') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/organisasi') ?>">Profil Organisasi</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'data-rt') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/data-rt') ?>">Data RT</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'pengurus') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/pengurus') ?>">Data Pengurus</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'anggota') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/anggota') ?>">Data Anggota</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'cetak-kartu') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/cetak_kartu') ?>">Cetak Kartu QR</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="sidebar-item <?= ($segment == 'agenda') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/agenda') ?>" class='sidebar-link' data-tooltip="Agenda Organisasi">
-                        <i class="bi bi-calendar-week-fill"></i>
+                    <a href="<?= base_url('admin/agenda') ?>" class='sidebar-link'>
+                        <i class="bi bi-calendar-event"></i>
                         <span>Agenda Organisasi</span>
                     </a>
                 </li>
-
-                <li class="sidebar-title">Absensi & Laporan</li>
-
-                <li class="sidebar-item">
-                    <a href="<?= base_url('scan') ?>" class='sidebar-link' data-tooltip="Scan QR Code">
-                        <i class="bi bi-qr-code-scan"></i>
-                        <span>Scan Absensi</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'koreksi') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/koreksi') ?>" class='sidebar-link' data-tooltip="Koreksi Absensi">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Koreksi Absensi</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'laporan') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/laporan') ?>" class='sidebar-link' data-tooltip="Laporan Kehadiran">
+                
+                <li class="sidebar-title">Laporan & Koreksi</li>
+                
+                <li class="sidebar-item <?= in_array($segment, ['laporan', 'koreksi']) ? 'active' : '' ?> has-sub">
+                    <a href="#" class='sidebar-link'>
                         <i class="bi bi-file-earmark-text-fill"></i>
-                        <span>Laporan Kehadiran</span>
+                        <span>Absensi Rapat</span>
                     </a>
+                    <ul class="submenu <?= in_array($segment, ['laporan', 'koreksi']) ? 'active' : '' ?>">
+                        <li class="submenu-item <?= ($segment == 'laporan') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/laporan') ?>">Pusat Laporan Rapat</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'koreksi') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/koreksi') ?>">Koreksi Data Rapat</a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li class="sidebar-item <?= ($segment == 'laporan-agenda') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/laporan-agenda') ?>" class='sidebar-link' data-tooltip="Laporan Agenda">
-                        <i class="bi bi-clipboard-data-fill"></i>
+                <li class="sidebar-item <?= in_array($segment, ['laporan-agenda', 'koreksi-agenda']) ? 'active' : '' ?> has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-calendar-check"></i>
                         <span>Laporan Agenda</span>
                     </a>
+                    <ul class="submenu <?= in_array($segment, ['laporan-agenda', 'koreksi-agenda']) ? 'active' : '' ?>">
+                        <li class="submenu-item <?= ($segment == 'laporan-agenda') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/laporan-agenda') ?>">Cetak Laporan</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'koreksi-agenda') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/koreksi-agenda') ?>">Koreksi Absen Agenda</a>
+                        </li>
+                    </ul>
                 </li>
-
+                
                 <li class="sidebar-title">Pengaturan</li>
 
-                <li class="sidebar-item <?= ($segment == 'cetak_kartu') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/cetak_kartu') ?>" class='sidebar-link' data-tooltip="Cetak Kartu">
-                        <i class="bi bi-credit-card-2-front-fill"></i>
-                        <span>Cetak Kartu</span>
+                <li class="sidebar-item <?= in_array($segment, ['setting-jam', 'setting-gps', 'whatsapp', 'setting-theme', 'users', 'updater', 'help']) ? 'active' : '' ?> has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Konfigurasi Sistem</span>
                     </a>
+                    <ul class="submenu <?= in_array($segment, ['setting-jam', 'setting-gps', 'whatsapp', 'setting-theme', 'users', 'updater', 'help']) ? 'active' : '' ?>">
+                        <li class="submenu-item <?= ($segment == 'setting-jam') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/setting-jam') ?>">Jam Absen Rapat</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'setting-gps') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/setting-gps') ?>">Lokasi & Radius GPS</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'whatsapp') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/whatsapp') ?>">Server WhatsApp</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'setting-theme') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/setting-theme') ?>">Tema & Tampilan</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'users') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/users') ?>">Manajemen Akun</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'updater') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/updater') ?>">Update Sistem</a>
+                        </li>
+                        <li class="submenu-item <?= ($segment == 'help') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/help') ?>">Panduan (Help)</a>
+                        </li>
+                    </ul>
                 </li>
-
-                <li class="sidebar-item <?= ($segment == 'setting-jam') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/setting-jam') ?>" class='sidebar-link' data-tooltip="Jam Absensi">
-                        <i class="bi bi-clock-fill"></i>
-                        <span>Jam Absensi</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'libur-nasional') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/libur-nasional') ?>" class='sidebar-link' data-tooltip="Hari Libur">
-                        <i class="bi bi-calendar-x-fill"></i>
-                        <span>Hari Libur</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'setting-gps') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/setting-gps') ?>" class='sidebar-link' data-tooltip="Lokasi GPS">
-                        <i class="bi bi-geo-fill"></i>
-                        <span>Lokasi GPS</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'users') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/users') ?>" class='sidebar-link' data-tooltip="Manajemen User">
-                        <i class="bi bi-people-fill"></i>
-                        <span>User System</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'setting-print') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/setting-print') ?>" class='sidebar-link' data-tooltip="Setting Print">
-                        <i class="bi bi-printer-fill"></i>
-                        <span>Setting Print</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'setting-theme') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/setting-theme') ?>" class='sidebar-link' data-tooltip="Tampilan">
-                        <i class="bi bi-palette-fill"></i>
-                        <span>Tampilan & Tema</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item <?= ($segment == 'updater') ? 'active' : '' ?>">
-                    <a href="<?= base_url('admin/updater') ?>" class='sidebar-link' data-tooltip="Update System">
-                        <i class="bi bi-cloud-arrow-down-fill"></i>
-                        <span>Update System</span>
-                    </a>
-                </li>
-
-                <?php endif; ?>
-
-                <?php if ($role == 'petugas') : ?>
+                
+                <?php else: ?>
                 <li class="sidebar-item <?= ($segment == 'dashboard') ? 'active' : '' ?>">
                     <a href="<?= base_url('petugas/dashboard') ?>" class='sidebar-link' data-tooltip="Dashboard">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a href="<?= base_url('scan') ?>" class='sidebar-link' data-tooltip="Scan QR Code">
-                        <i class="bi bi-qr-code-scan"></i>
-                        <span>Scan Absensi</span>
-                    </a>
-                </li>
-
                 <li class="sidebar-item <?= ($segment == 'data-absensi') ? 'active' : '' ?>">
-                    <a href="<?= base_url('petugas/data-absensi') ?>" class='sidebar-link' data-tooltip="Data Absensi">
+                    <a href="<?= base_url('petugas/data-absensi') ?>" class='sidebar-link' data-tooltip="Data Absensi Rapat">
                         <i class="bi bi-table"></i>
-                        <span>Data Absensi</span>
+                        <span>Data Absensi Rapat</span>
                     </a>
                 </li>
                 <?php endif; ?>

@@ -29,7 +29,7 @@ class DataAbsensi extends BaseController
         }
 
         $data = [
-            'title' => 'Data Absensi Harian',
+            'title' => 'Data Absensi Rapat',
             'rt' => $rtModel->findAll(),
             'tab' => $tab,
             'tgl_awal' => $tglAwal,
@@ -39,6 +39,6 @@ class DataAbsensi extends BaseController
             'absensi_anggota' => $dataAnggota
         ];
 
-        return view('petugas/data_absensi/index', $data);
+        return view('petugas/data_absensi', $data);
     }
 }

@@ -14,7 +14,7 @@
 <body onload="window.print()">
     <div class="header">
         <h3 style="margin:0;"><?= strtoupper($organisasi['nama_organisasi']) ?></h3>
-        <p style="margin:5px 0;">REKAPITULASI KEHADIRAN TAHUN <?= $tahun ?></p>
+        <p style="margin:5px 0;">REKAPITULASI KEHADIRAN RAPAT TAHUN <?= $tahun ?></p>
         <?php if($info_rt): ?><p style="margin:0;">RT: <?= $info_rt ?></p><?php endif; ?>
     </div>
 
@@ -26,34 +26,34 @@
                 <?php for($m=1; $m<=12; $m++): ?>
                     <th colspan="4"><?= date('M', mktime(0,0,0,$m,1)) ?></th>
                 <?php endfor; ?>
-                <th colspan="4">Total Tahunan</th>
+                <th colspan="4" style="background:#f0f0f0;">TOTAL TAHUNAN</th>
             </tr>
             <tr>
                 <?php for($m=1; $m<=12; $m++): ?>
-                    <th>H</th><th>S</th><th>I</th><th>A</th>
+                    <th width="15">H</th><th width="15">S</th><th width="15">I</th><th width="15">A</th>
                 <?php endfor; ?>
-                <th>H</th><th>S</th><th>I</th><th>A</th>
+                <th width="25" style="background:#f0f0f0;">H</th>
+                <th width="25" style="background:#f0f0f0;">S</th>
+                <th width="25" style="background:#f0f0f0;">I</th>
+                <th width="25" style="background:#f0f0f0;">A</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($users as $k => $u): 
-                $grandH=0; $grandS=0; $grandI=0; $grandA=0;
-            ?>
+            <?php foreach($users as $key => $u): ?>
             <tr>
-                <td><?= $k+1 ?></td>
+                <td><?= $key+1 ?></td>
                 <td class="text-left"><?= $u['nama_lengkap'] ?></td>
-                <?php for($m=1; $m<=12; $m++): 
+                <?php 
+                $grandH=0; $grandS=0; $grandI=0; $grandA=0;
+                for($m=1; $m<=12; $m++): 
                     $h = isset($rekap[$u['id']][$m]['H']) ? $rekap[$u['id']][$m]['H'] : 0;
                     $s = isset($rekap[$u['id']][$m]['S']) ? $rekap[$u['id']][$m]['S'] : 0;
                     $i = isset($rekap[$u['id']][$m]['I']) ? $rekap[$u['id']][$m]['I'] : 0;
                     
-                    // Hitung Alfa Otomatis: Hari Efektif Bulan Ini - (Hadir + Sakit + Izin)
-                    // Variabel $effective_days sudah bersih dari hari libur nasional & rutin
-                    $daysEffective = isset($effective_days[$m]) ? $effective_days[$m] : 0;
+                    $totalRapat = isset($rapatCountPerMonth[$m]) ? $rapatCountPerMonth[$m] : 0;
                     $totalNonAlfa = $h + $s + $i;
                     
-                    // Alfa adalah sisa hari efektif yang tidak diabsen
-                    $a = $daysEffective - $totalNonAlfa;
+                    $a = $totalRapat - $totalNonAlfa;
                     if($a < 0) $a = 0; 
 
                     $grandH += $h; $grandS += $s; $grandI += $i; $grandA += $a;
