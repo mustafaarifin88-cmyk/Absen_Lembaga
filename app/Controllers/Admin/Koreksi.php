@@ -12,7 +12,7 @@ class Koreksi extends BaseController
     {
         $rtModel = new RtModel();
         $data = [
-            'title' => 'Koreksi Kehadiran Anggota',
+            'title' => 'Koreksi Kehadiran Rapat',
             'rt' => $rtModel->findAll(),
             'tampil_data' => false,
             'active_tab' => 'pengurus'
@@ -36,51 +36,42 @@ class Koreksi extends BaseController
         }
 
         $data = [
-            'title' => 'Koreksi Kehadiran',
+            'title' => 'Koreksi Kehadiran Rapat',
             'rt' => $rtModel->findAll(),
-            'tampil_data' => true,
             'laporan' => $dataLaporan,
-            'user_type' => $userType,
+            'tampil_data' => true,
+            'active_tab' => $userType,
             'tgl_awal' => $tglAwal,
             'tgl_akhir' => $tglAkhir,
-            'rt_id' => $rtId,
-            'active_tab' => $userType
+            'rt_id' => $rtId
         ];
 
         return view('admin/koreksi/index', $data);
     }
 
-    public function delete($id)
-    {
-        $absensiModel = new AbsensiModel();
-        $absensiModel->delete($id);
-        return redirect()->back()->with('success', 'Data absensi berhasil direset (Kembali ke Alfa).');
-    }
-
     public function bulkAction()
     {
-        $absensiModel = new AbsensiModel();
-        
-        $action = $this->request->getPost('action');
-        $selectedIds = $this->request->getPost('selected_id'); 
+        $action = $this->request->getPost('action_type');
+        $selectedData = $this->request->getPost('selected_data'); 
         $userType = $this->request->getPost('user_type');
-        $tanggal = $this->request->getPost('tanggal');
-        
+
+        if (empty($selectedData)) {
+            return redirect()->back()->with('error', 'Pilih minimal satu data untuk diproses.');
+        }
+
         $status = $this->request->getPost('status');
         $jamMasukInput = $this->request->getPost('jam_masuk');
         $jamPulangInput = $this->request->getPost('jam_pulang');
         $keterangan = $this->request->getPost('keterangan');
 
-        if (!$selectedIds) {
-            return redirect()->back()->with('error', 'Tidak ada data yang dipilih.');
-        }
-
+        $absensiModel = new AbsensiModel();
         $countSuccess = 0;
 
-        foreach ($selectedIds as $userId) {
-            
-            $existing = $absensiModel->where('user_type', $userType)
-                                     ->where('user_id', $userId)
+        foreach ($selectedData as $dataItem) {
+            list($userId, $tanggal) = explode('|', $dataItem);
+
+            $existing = $absensiModel->where('user_id', $userId)
+                                     ->where('user_type', $userType)
                                      ->where('tanggal', $tanggal)
                                      ->first();
 
@@ -98,12 +89,7 @@ class Koreksi extends BaseController
 
                 if ($status == 'Hadir' || $status == 'Terlambat') {
                     $data['jam_masuk'] = !empty($jamMasukInput) ? $jamMasukInput : '07:00:00';
-                    
-                    if (!empty($jamPulangInput)) {
-                        $data['jam_pulang'] = $jamPulangInput;
-                    } else {
-                        $data['jam_pulang'] = null; 
-                    }
+                    $data['jam_pulang'] = !empty($jamPulangInput) ? $jamPulangInput : null;
                 } else {
                     $data['jam_masuk'] = null;
                     $data['jam_pulang'] = null;
@@ -123,7 +109,7 @@ class Koreksi extends BaseController
             }
         }
 
-        $msg = ($action == 'delete') ? "$countSuccess Data berhasil dihapus (Reset ke Alfa)." : "$countSuccess Data berhasil diperbarui.";
+        $msg = ($action == 'delete') ? "$countSuccess Data berhasil dihapus (Di-reset)." : "$countSuccess Data berhasil diperbarui.";
         return redirect()->back()->with('success', $msg);
     }
 }
