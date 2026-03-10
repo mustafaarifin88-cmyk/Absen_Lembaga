@@ -110,11 +110,15 @@ class Laporan extends BaseController
 
         $rekap = $absensiModel->getRekapBulanan($bulan, $tahun, $type, $rtId);
 
-        $rapatDatesQuery = $this->db->table('absensi')
+        $targetPeserta = ($type == 'pengurus') ? 'Pengurus' : 'Anggota';
+        $rapatDatesQuery = $this->db->table('jadwal_rapat')
             ->select('tanggal')
-            ->where('user_type', $type)
             ->where('MONTH(tanggal)', $bulan)
             ->where('YEAR(tanggal)', $tahun)
+            ->groupStart()
+                ->where('peserta', 'Semua')
+                ->orWhere('peserta', $targetPeserta)
+            ->groupEnd()
             ->groupBy('tanggal')
             ->get()->getResultArray();
         $rapatDates = array_column($rapatDatesQuery, 'tanggal');
@@ -156,11 +160,15 @@ class Laporan extends BaseController
 
         $rekap = $absensiModel->getRekapBulanan($bulan, $tahun, $userType, $rtId);
 
-        $rapatDatesQuery = $this->db->table('absensi')
+        $targetPeserta = ($userType == 'pengurus') ? 'Pengurus' : 'Anggota';
+        $rapatDatesQuery = $this->db->table('jadwal_rapat')
             ->select('tanggal')
-            ->where('user_type', $userType)
             ->where('MONTH(tanggal)', $bulan)
             ->where('YEAR(tanggal)', $tahun)
+            ->groupStart()
+                ->where('peserta', 'Semua')
+                ->orWhere('peserta', $targetPeserta)
+            ->groupEnd()
             ->groupBy('tanggal')
             ->get()->getResultArray();
         $rapatDates = array_column($rapatDatesQuery, 'tanggal');
@@ -207,13 +215,17 @@ class Laporan extends BaseController
 
         $rekapTahun = $absensiModel->getRekapTahunan($tahun, $userType, $rtId);
 
+        $targetPeserta = ($userType == 'pengurus') ? 'Pengurus' : 'Anggota';
         $rapatCountPerMonth = [];
         for ($m = 1; $m <= 12; $m++) {
-            $count = $this->db->table('absensi')
+            $count = $this->db->table('jadwal_rapat')
                 ->select('tanggal')
-                ->where('user_type', $userType)
                 ->where('MONTH(tanggal)', $m)
                 ->where('YEAR(tanggal)', $tahun)
+                ->groupStart()
+                    ->where('peserta', 'Semua')
+                    ->orWhere('peserta', $targetPeserta)
+                ->groupEnd()
                 ->groupBy('tanggal')
                 ->countAllResults();
             $rapatCountPerMonth[$m] = $count;
