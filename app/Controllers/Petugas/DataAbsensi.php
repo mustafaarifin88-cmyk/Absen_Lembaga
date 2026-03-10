@@ -18,14 +18,11 @@ class DataAbsensi extends BaseController
         $tglAkhir = $this->request->getGet('tgl_akhir') ?? date('Y-m-d');
         $rtId = $this->request->getGet('rt_id');
 
-        $dataPengurus = [];
+        $absensi = [];
         if ($tab == 'pengurus') {
-            $dataPengurus = $absensiModel->getLaporan($tglAwal, $tglAkhir, 'pengurus');
-        }
-
-        $dataAnggota = [];
-        if ($tab == 'anggota') {
-            $dataAnggota = $absensiModel->getLaporan($tglAwal, $tglAkhir, 'anggota', $rtId);
+            $absensi = $absensiModel->getLaporan($tglAwal, $tglAkhir, 'pengurus');
+        } elseif ($tab == 'anggota') {
+            $absensi = $absensiModel->getLaporan($tglAwal, $tglAkhir, 'anggota', $rtId);
         }
 
         $data = [
@@ -35,8 +32,7 @@ class DataAbsensi extends BaseController
             'tgl_awal' => $tglAwal,
             'tgl_akhir' => $tglAkhir,
             'rt_id' => $rtId,
-            'absensi_pengurus' => $dataPengurus,
-            'absensi_anggota' => $dataAnggota
+            'absensi' => $absensi
         ];
 
         return view('petugas/data_absensi', $data);
